@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Results</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+
+	<style type="text/css">
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+	.movieResults{
+  	  padding: 30px;
+	}
+
+	.form-row{
+		padding: 30px;
+  		background-color:#e8e8e8;
+  		background-origin: content-box;
+		position: relative;
+	}
+
+	.movieRating{
+	position: absolute;
+  	top: 10px;
+  	right: 22px;
+  	font-size: 18px;
+	}
+
+	</style>
+
+	<script type="text/javascript" href="rating.js">
+		// Rating Initialization
+		$(document).ready(function() {
+		  $('#rateMe3').mdbRate();
+		});
+	</script>
+
+</head>
+<body>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="/static/js/bootstrap.js"></script>
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/movie">
+    <img src="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Movie-Studio-icon.png" width="30" height="30" alt="">
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Actors<span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="/movie/allMovies">Movies<span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Directors<span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Manage database
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Movies</a>
+          <a class="dropdown-item" href="#">Actors</a>
+          <a class="dropdown-item" href="#">Directors</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="http://127.0.0.1:8000/admin/">Admin page</a>
+        </div>
+      </li>
+
+		<li class="nav-item">
+        	<a class="nav-link" href="https://github.com/deepakHonakeri05/Movie-Database">Project Link<span class="sr-only"></span></a>
+      </li>
+
+    </ul>
+
+    	<form class="form-inline my-2 my-lg-0">
+      		<input class="form-control mr-sm-2" type="search" placeholder="ex: Dhoom" aria-label="Search">
+     		 <button class="btn btn-success" type="submit">Search</button>
+    	</form>
+    </div>
+  </nav>
+
+  <div class="form-row ">
+  	<div class ="movieNameRatingContainer">
+	 <H2> Avengers : End Game</H2>
+	 <h3>2019</h3>
+	 <div class="movieRating">
+		<h6>Average Rating : 8/10 </h6>
+		<button class="btn btn-warning" type="submit">Rate</button>
+		<!-- <span id="rateMe3"  class="rating-faces"></span> -->
+	 </div>
+	</div>
+  </div>
+
+  {{ person }}
+
+  <div class="movieResults">
+  	<div class="movieDescription">
+	  	<h3>Description</h3>
+	  	<p>Bilge rat Barbary Coast fire ship knave fire in the hole clipper Jack Ketch gibbet flogging prow. Ahoy avast strike colors topmast belay holystone mizzen main sheet clipper Yellow Jack. Ballast poop deck warp Sail ho Jolly Roger reef sails handsomely pink Shiver me timbers knave. Davy Jones' Locker bilged on her anchor galleon red ensign bilge Yellow Jack spirits run a shot across the bow coxswain hail-shot.<br><br>
+
+		Cat o'nine tails salmagundi pinnace league heave down chase carouser black jack no prey, no pay Letter of Marque. Measured fer yer chains mizzenmast heave down bilged on her anchor main sheet gaff capstan gun cable Brethren of the Coast. Hornswaggle galleon hulk landlubber or just lubber scurvy line port fluke chandler belaying pin. Clap of thunder bucko man-of-war splice the main brace galleon black jack lee brig keel Cat o'nine tails.</p>
+  	</div>
+
+  	<div class="movieDirectors">
+  		<h3>Directors</h3>
+  		<ul>
+  			<li>A - 98483</li>
+  			<li>B - 98382</li>
+  			<li>C - 98403</li>
+<!--   			{% for question in latest_question_list %}
+         		<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    		{% endfor %} -->
+  		</ul>
+  	</div>
+
+  	<div class="movieCast">
+  		<h3>Movie Cast and Roles</h3>
+  		<ul>
+  			<li>C - ......</li>
+  			<li>D - ......</li>
+  			<li>E - ......</li>
+<!--   			{% for question in latest_question_list %}
+         		<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    		{% endfor %} -->
+  		</ul>
+  	</div>
+
+  </div>
+
+</body>
+</html>
