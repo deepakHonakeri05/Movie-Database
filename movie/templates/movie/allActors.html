@@ -5,6 +5,9 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 
 	<style type="text/css">
+    .col-sm-2{
+      margin: 10px;
+    }
 	</style>
 </head>
 <body>
@@ -57,10 +60,29 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="ex: Dhoom" aria-label="Search">
-      <button class="btn btn-success" type="submit" formaction="movie_results.html">Search</button>
+      <button class="btn btn-success" type="submit" formaction="actorDetails/0">Search</button>
     </form>
   </div>
 </nav>
+
+<h1>All Actors</h1>
+
+{% if all_actors %}
+    {% for actor in all_actors %}
+    {% if forloop.first %}<div class="row">{% endif %}
+
+    <div class="col-sm-2 ">
+
+    <a href="actorDetails/{{ actor.act_id }}/">
+      <img src="https://images-na.ssl-images-amazon.com/images/I/71rNJQ2g-EL._SY606_.jpg" width="250px" height="400px">
+      <br>{{ actor.act_name }}</a>
+    </div>
+    {% if forloop.counter|divisibleby:6 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %}
+{% endfor %}
+{% else %}
+    <p>No Actors are available.</p>
+{% endif %}
 
 </body>
 

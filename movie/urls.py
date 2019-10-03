@@ -9,5 +9,7 @@ urlpatterns = [
     path('allMovies',views.allMovies,name='allMovies'),
     path('allDirectors',views.allDirectors,name='allDirectors'),
     path('allActors',views.allActors,name='allActors'),
-    path('movieDetails/<int:usn>/',views.movieDetails)
+    path('movieDetails/<int:mov_id>/',views.movieDetails),
+    path('directorDetails/<int:dir_id>/',views.directorDetails),
+    path('actorDetails/<int:act_id>/',views.actorDetails)
 ]

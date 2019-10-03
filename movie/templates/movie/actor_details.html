@@ -91,61 +91,7 @@
     </div>
   </nav>
 
-
-
-  <div class="form-row ">
-  	<div class ="movieNameRatingContainer">
-      {% if movie %}
-         {% for movies in movie %}
-	        <H2> {{ movies.mov_title }}</H2>
-	        <h3>{{ movies.mov_year }}</h3>
-         {% endfor %}
-      {% endif %}
-	    <div class="movieRating">
-		    <h6>Average Rating : 8/10 </h6>
-		    <button class="btn btn-warning" type="submit">Rate</button>
-		<!-- <span id="rateMe3"  class="rating-faces"></span> -->
-	    </div>
-	   </div>
-  </div>
-
-  <div class="movieResults">
-  	<div class="movieDescription">
-	  	<h3>Description</h3>
-	  	<p>Bilge rat Barbary Coast fire ship knave fire in the hole clipper Jack Ketch gibbet flogging prow. Ahoy avast strike colors topmast belay holystone mizzen main sheet clipper Yellow Jack. Ballast poop deck warp Sail ho Jolly Roger reef sails handsomely pink Shiver me timbers knave. Davy Jones' Locker bilged on her anchor galleon red ensign bilge Yellow Jack spirits run a shot across the bow coxswain hail-shot.<br><br>
-
-		Cat o'nine tails salmagundi pinnace league heave down chase carouser black jack no prey, no pay Letter of Marque. Measured fer yer chains mizzenmast heave down bilged on her anchor main sheet gaff capstan gun cable Brethren of the Coast. Hornswaggle galleon hulk landlubber or just lubber scurvy line port fluke chandler belaying pin. Clap of thunder bucko man-of-war splice the main brace galleon black jack lee brig keel Cat o'nine tails.</p>
-  	</div>
-
-  	<div class="movieDirectors">
-  		<h3>Directors</h3>
-
-  		{% if movie %}
-      <ul>
-        {% for movies in movie %}
-          <li>{{ movies.dir_id }}</li>
-      {% endfor %}
-      </ul>
-      {% else %}
-    <p>No polls are available.</p>
-      {% endif %}
-
-  		</ul>
-  	</div>
-
-  	<div class="movieCast">
-  		<h3>Movie Cast and Roles</h3>
-  		<ul>
-  			<li>C - ......</li>
-  			<li>D - ......</li>
-  			<li>E - ......</li>
-<!--   			{% for question in latest_question_list %}
-         		<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    		{% endfor %} -->
-  		</ul>
-  	</div>
-
-  </div>
+  <h2>Actor</h2>  	
 
 </body>
 </html>

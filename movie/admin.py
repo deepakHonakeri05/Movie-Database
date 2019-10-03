@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import Person, iamarks, semsec
+from .models import actor, director, movies, moviecast, rating
 # Register your models here.
-admin.site.register(Person)
-admin.site.register(semsec)
-admin.site.register(iamarks)
+admin.site.register(actor)
+admin.site.register(director)
+admin.site.register(movies)
+admin.site.register(moviecast)
+admin.site.register(rating)

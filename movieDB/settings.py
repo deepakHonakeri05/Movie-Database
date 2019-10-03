@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'movieDB.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ex_college',
+        'NAME': 'movieDB',
         'USER': 'deepak',
         'PASSWORD': 'deepak'
     }
