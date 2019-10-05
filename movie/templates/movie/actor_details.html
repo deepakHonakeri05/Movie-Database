@@ -7,10 +7,6 @@
 	<style type="text/css">
 	@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
-	.movieResults{
-  	  padding: 30px;
-	}
-
 	.form-row{
 		padding: 30px;
   		background-color:#e8e8e8;
@@ -18,12 +14,15 @@
 		position: relative;
 	}
 
-	.movieRating{
-	position: absolute;
-  	top: 10px;
-  	right: 22px;
-  	font-size: 18px;
-	}
+  .actorResultsBG{
+    padding: 30px;
+  }
+
+  .actorImagePic{
+    position: absolute;
+    top: 20px;
+    right: 22px;
+  }
 
 	</style>
 
@@ -54,7 +53,7 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" href="#">Actors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allActors">Actors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
@@ -62,7 +61,7 @@
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="#">Directors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allDirectors">Directors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item dropdown">
@@ -90,8 +89,43 @@
     	</form> -->
     </div>
   </nav>
+    <div class="form-row ">
+      <div class ="actorNameRatingContainer">
+      {% if Actor %}
+         {% for actor in Actor %}
+          <H2> {{ actor.act_name }}</H2>
+          <h3><b>Actor</b></h3>
+         {% endfor %}
+      {% endif %}
+     </div>
+     <div class="actorImagePic">
+       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThs33rkNQgstUnlx89JXkiDx4bFg4gxp-5-pmDZYmJTrqTiVde" width="96px" height="96px">
+    </div>
 
-  <h2>Actor</h2>  	
+  </div> 
+  <div class="actorResultsBG">
+
+    <div class="actorBio">
+      <h3>Biography</h3>
+      <p>Bilge rat Barbary Coast fire ship knave fire in the hole clipper Jack Ketch gibbet flogging prow. Ahoy avast strike colors topmast belay holystone mizzen main sheet clipper Yellow Jack. Ballast poop deck warp Sail ho Jolly Roger reef sails handsomely pink Shiver me timbers knave. Davy Jones' Locker bilged on her anchor galleon red ensign bilge Yellow Jack spirits run a shot across the bow coxswain hail-shot.<br><br>
+
+    Cat o'nine tails salmagundi pinnace league heave down chase carouser black jack no prey, no pay Letter of Marque. Measured fer yer chains mizzenmast heave down bilged on her anchor main sheet gaff capstan gun cable Brethren of the Coast. Hornswaggle galleon hulk landlubber or just lubber scurvy line port fluke chandler belaying pin. Clap of thunder bucko man-of-war splice the main brace galleon black jack lee brig keel Cat o'nine tails.</p>
+    </div> 
+
+    <div class="moviesPlayed">
+      <h3>Movies acted</h3>
+      <ul>
+        {% if castInfo %}
+         {% for castInfo in castInfo %}
+            <li> {{ castInfo.mov_title }} - {{castInfo.mov_year}} </li>
+         {% endfor %}
+         {% else %}
+            <p>No movies acted.</p>
+      {% endif %}
+      </ul>
+    </div>
+
+</div>	
 
 </body>
 </html>

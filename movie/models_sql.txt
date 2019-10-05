@@ -1,0 +1,8 @@
+mysql> create table movie_rating 
+    -> ( user_id int,
+    -> mov_id int,
+    -> rev_stars decimal(5,2),
+    -> reviews varchar(50),
+    -> primary key(user_id, mov_id),
+    -> foreign key(mov_id) references movie_moviecast(mov_id));
+Query OK, 0 rows affected (0.02 sec)

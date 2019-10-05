@@ -29,15 +29,15 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" href="/movie/allActors">Actors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allActors/">Actors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="/movie/allMovies">Movies<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allMovies/">Movies<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="/movie/allDirectors">Directors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allDirectors/">Directors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item dropdown">
@@ -59,21 +59,21 @@
 
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="ex: Dhoom" aria-label="Search">
-      <button class="btn btn-success" type="submit" formaction="directorDetails/0">Search</button>
+      <input class="form-control mr-sm-2" name="directorSearchQuery" type="search" placeholder="ex: Hitchcock" aria-label="Search" maxlength="100">
+      <button class="btn btn-success" type="submit" formaction="/movie/allDirectors">Search</button>
     </form>
   </div>
 </nav>
 
-<h1>All Directors</h1>
+<h1>Directors</h1>
 
-  {% if all_directors %}
-    {% for director in all_directors %}
+  {% if directorList %}
+    {% for director in directorList %}
     {% if forloop.first %}<div class="row">{% endif %}
 
     <div class="col-sm-2 ">
 
-        <a href="directorDetails/{{ director.dir_id }}/">
+        <a href="/movie/directorDetails/{{ director.dir_id }}/">
           <img src="https://cdn.shopify.com/s/files/1/1064/3660/products/1500x1875-flat-stellavie-rentzsch-movie-director-portrait-prints-martin-scorsese_2480x1640.jpg?v=1540309468" width="250px" height="400px"> <br> {{ director.dir_name }}</a>
     </div>
     {% endfor %}

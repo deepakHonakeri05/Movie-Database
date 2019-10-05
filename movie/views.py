@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404,render
-from .models import actor, director, movies, moviecast, rating
+from .models import actor, director, movies, moviecast, rating, userinfo
 
 # Create your views here.
 from django.http import HttpResponse,HttpResponseRedirect
@@ -8,41 +8,93 @@ from django.views import generic
 from django.utils import timezone
 from django.template import loader
 
+from .forms import movieSearchForm, actorSearchForm, directorSearchForm
 
 
 def root(request):
     template = loader.get_template("movie/root.html")
     return HttpResponse(template.render())
 
+def signIN(request):
+	user_id = request.GET.get('useridQuery')
+	password = request.GET.get('passwordQuery')
+
+	if user_id and password :
+		userID = str(user_id)
+		passWord = str(password)
+
+
+
+
+	return render(request, '/movie/')
+
+def signUP(request):
+	template = loader.get_template("movie/signup.html")
+	return HttpResponse(template.render())
+
 def allMovies(request):
-	all_list = movies.objects.all()
-	movieList = {'all_list': all_list}
-	return render(request, 'movie/allMovies.html', movieList)
-    # template = loader.get_template("movie/all_movies.html")
-    # return HttpResponse(template.render())
+	
+	movieName = request.GET.get('movieSearchQuery')
+
+	if movieName:
+		movie = '%' + str(movieName) + '%'
+		movieResult = movies.objects.raw('''SELECT * FROM movie_movies where mov_title LIKE %s ''',[movie])
+
+	else :
+		movieResult = movies.objects.raw('''SELECT * FROM movie_movies ''')
+		
+	return render(request, 'movie/allMovies.html', {'movieResult':movieResult})
 
 def allDirectors(request):
-	all_directors = director.objects.all()
-	directorList = {'all_directors': all_directors}
-	return render(request, 'movie/allDirectors.html', directorList)
+
+	dirName = request.GET.get('directorSearchQuery')
+
+	if dirName:
+		directorName = '%' + str(dirName) + '%'
+		directorList = director.objects.raw('''SELECT * FROM movie_director where dir_name LIKE %s''',[directorName])
+
+	else:
+		directorList = director.objects.raw('''SELECT * FROM movie_director''')
+
+	return render(request, 'movie/allDirectors.html', {'directorList': directorList})
 
 def allActors(request):
-	all_actors = actor.objects.all()
-	actorList = {'all_actors': all_actors}
-	return render(request, 'movie/allActors.html', actorList)
+
+	actName = request.GET.get('actorSearchQuery')
+
+	if actName :
+		actorName = '%' + str(actName) + '%'
+		actorList = actor.objects.raw('''SELECT * FROM movie_actor where act_name LIKE %s''',[actorName])
+
+	else:
+		actorList = actor.objects.raw('''SELECT * FROM movie_actor''')
+	
+	return render(request, 'movie/allActors.html', {'actorList':actorList})
 
 def movieDetails(request,mov_id):
-	movie = None
-	movid = int(mov_id)
+	Movie = None
+	movID = int(mov_id)
 
-	movie = movies.objects.filter(mov_id=movid)
+	Movie = movies.objects.raw('''SELECT * FROM movie_movies where mov_id = %s''',[movID])
+	directorInfo = director.objects.raw('''SELECT * FROM movie_director where dir_id in (SELECT dir_id from movie_movies where mov_id=%s)''',[movID])
+	#avgRating = rating.objects.raw('''SELECT avg(rev_stars) from movie_rating where mov_id = %s''',[movID])
 
-	return render(request, 'movie/movie_details.html', {'movie' : movie})
+	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'movie' : Movie})
 
 def directorDetails(request,dir_id):
-	template = loader.get_template("movie/director_details.html")
-	return HttpResponse(template.render())
+	Director = None
+	dirID = int(dir_id)
+
+	Director = director.objects.raw('''SELECT * FROM movie_director where  dir_id=%s''',[dirID])
+	moviesInfo = movies.objects.raw('''SELECT * FROM movie_movies where dir_id in (SELECT dir_id FROM movie_director where dir_id = %s)''',[dirID])
+	return render(request, 'movie/director_details.html', {'Director':Director , 'moviesInfo':moviesInfo})
 
 def actorDetails(request,act_id):
-	template = loader.get_template("movie/actor_details.html")
-	return HttpResponse(template.render())
+	Actor = None
+	actID = int(act_id)
+
+	Actor = actor.objects.raw('''SELECT * FROM movie_actor where act_id =%s ''',[actID])
+	castInfo = movies.objects.raw('''SELECT * FROM movie_movies where mov_id in (SELECT mov_id FROM movie_moviecast where act_id = %s) ''',[actID])
+	return render(request, 'movie/actor_details.html', {'Actor':Actor, 'castInfo':castInfo})
+
+

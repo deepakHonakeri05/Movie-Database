@@ -54,7 +54,7 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" href="#">Actors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allActors">Actors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
@@ -62,7 +62,7 @@
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="#">Directors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allDirectors">Directors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item dropdown">
@@ -101,10 +101,14 @@
 	        <h3>{{ movies.mov_year }}</h3>
          {% endfor %}
       {% endif %}
+
 	    <div class="movieRating">
-		    <h6>Average Rating : 8/10 </h6>
+<!--       {% if avgRating %}
+         for {% for rating in avgRating %}  --> 
+		      <h6>Average Rating : {{ avgRating }} </h6>
+<!--         {% endfor %}
+      {% endif %} -->
 		    <button class="btn btn-warning" type="submit">Rate</button>
-		<!-- <span id="rateMe3"  class="rating-faces"></span> -->
 	    </div>
 	   </div>
   </div>
@@ -120,10 +124,10 @@
   	<div class="movieDirectors">
   		<h3>Directors</h3>
 
-  		{% if movie %}
+  		{% if directorInfo %}
       <ul>
-        {% for movies in movie %}
-          <li>{{ movies.dir_id }}</li>
+        {% for director in directorInfo %}
+          <li>{{ director.dir_name }}  {{ director.dir_phone }} </li>
       {% endfor %}
       </ul>
       {% else %}

@@ -2,41 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-
-# class Person(models.Model):
-# 	usn = models.IntegerField(primary_key=True)
-# 	sname = models.CharField(max_length=20)
-# 	address = models.CharField(max_length=20)
-# 	phone = models.IntegerField()
-# 	gender = models.CharField(max_length=1)
-# 	def __str__(self):
-# 	    return self.sname
-
-# class semsec(models.Model):
-# 	"""docstring for semsec"""
-# 	ssid = models.IntegerField(primary_key=True)
-# 	sem = models.IntegerField(default = 0)
-# 	sec = models.CharField(max_length=1)
-
-# 	def __str__(self):
-# 		return self.sec
-
-# class iamarks(models.Model):
-# 	class Meta:
-# 		unique_together = (("usn", "ssid"),)
-
-# 	usn = models.ForeignKey(Person,on_delete=models.CASCADE,primary_key=True)
-# 	sub_code = models.CharField(max_length=20)
-# 	ssid = models.ForeignKey(semsec,on_delete=models.CASCADE)
-# 	t1 = models.IntegerField()
-# 	t2 = models.IntegerField()
-# 	t3 = models.IntegerField()
-# 	finalavg = models.IntegerField()
-
-# 	def __str__(self):
-# 	    return self.sub_code
-
-
 class actor(models.Model):
 	act_id = models.IntegerField(primary_key=True)
 	act_name = models.CharField(max_length=50)
@@ -66,6 +31,10 @@ class movies(models.Model):
 	def __str__(self):
 		return self.mov_title
 
+# class movie_actotr_awards(models.Model):
+# 	act_id = models.IntegerField(primary_key=True)
+# 	awards = models.CharField(primary_key=True)
+
 
 class moviecast(models.Model):
 	class Meta:
@@ -75,6 +44,14 @@ class moviecast(models.Model):
 	role = models.CharField(max_length=30)
 
 class rating(models.Model):
-	mov_id = models.ForeignKey(movies,on_delete=models.CASCADE)
+	class Meta:
+		unique_together = (("user_id", "mov_id"),)
+	user_id = models.IntegerField(primary_key=True)
+	mov_id = models.ForeignKey(movies,on_delete=models.PROTECT)
 	stars = models.DecimalField(max_digits=2, decimal_places=2)
 	#review = models.CharField(max_length=100)
+
+class userinfo(models.Model):
+	user_id = models.CharField(primary_key=True,max_length=20)
+	password = models.CharField(max_length=20)
+	email = models.CharField(max_length=20)

@@ -7,8 +7,8 @@
 	<style type="text/css">
 	@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
-	.movieResults{
-  	  padding: 30px;
+	.directorResultsBG{
+  	  padding: 20px;
 	}
 
 	.form-row{
@@ -18,12 +18,11 @@
 		position: relative;
 	}
 
-	.movieRating{
-	position: absolute;
-  	top: 10px;
-  	right: 22px;
-  	font-size: 18px;
-	}
+  .directorImagePic{
+    position: absolute;
+    top: 15px;
+    right: 22px;
+  }
 
 	</style>
 
@@ -54,7 +53,7 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" href="#">Actors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allActors">Actors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
@@ -62,7 +61,7 @@
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="#">Directors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allDirectors">Directors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item dropdown">
@@ -91,7 +90,59 @@
     </div>
   </nav>
 
-  <h2>Director</h2>  	
+    <div class="form-row ">
+      {% if Director %}
+         {% for director in Director %}
+      <div class ="actorNameRatingContainer">
+          <H2> {{ director.dir_name }}</H2>
+          <h5> <b>Director</b></h5>    
+     </div>
+
+     <div class="directorImagePic">
+       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThs33rkNQgstUnlx89JXkiDx4bFg4gxp-5-pmDZYmJTrqTiVde" width="96px" height="96px">
+       <br>
+       <img src="https://image.flaticon.com/icons/svg/60/60720.svg" width="12px" height="12px">
+       <font color="blue">Contact</font> : {{ director.dir_phone }} </li>
+    </div>
+        {% endfor %}
+      {% endif %}
+  </div> 
+
+  <div class="directorResultsBG">
+
+    <div class="directorBio">
+      <h3>Biography</h3>
+      <p>Bilge rat Barbary Coast fire ship knave fire in the hole clipper Jack Ketch gibbet flogging prow. Ahoy avast strike colors topmast belay holystone mizzen main sheet clipper Yellow Jack. Ballast poop deck warp Sail ho Jolly Roger reef sails handsomely pink Shiver me timbers knave. Davy Jones' Locker bilged on her anchor galleon red ensign bilge Yellow Jack spirits run a shot across the bow coxswain hail-shot.<br><br>
+
+    Cat o'nine tails salmagundi pinnace league heave down chase carouser black jack no prey, no pay Letter of Marque. Measured fer yer chains mizzenmast heave down bilged on her anchor main sheet gaff capstan gun cable Brethren of the Coast. Hornswaggle galleon hulk landlubber or just lubber scurvy line port fluke chandler belaying pin. Clap of thunder bucko man-of-war splice the main brace galleon black jack lee brig keel Cat o'nine tails.</p>
+    </div>
+
+    <div class="directorOscars">
+      <h3>Oscars Won</h3>
+      <ul>
+        <li>C - ......</li>
+        <li>D - ......</li>
+        <li>E - ......</li>
+<!--        {% for question in latest_question_list %}
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        {% endfor %} -->
+      </ul>
+    </div> 
+
+    <div class="moviesDirected">
+      <h3>Movies Directed</h3>
+      <ul>
+        {% if moviesInfo %}
+         {% for directorMov in moviesInfo %}
+            <li> {{ directorMov.mov_title }} - {{directorMov.mov_year}} </li>
+          {% endfor %}
+          {% else %}
+            <p>No movies Directed.</p>
+      {% endif %}
+      </ul>
+    </div>
+
+</div>    	
 
 </body>
 </html>

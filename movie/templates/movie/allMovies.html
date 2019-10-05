@@ -31,15 +31,15 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" href="/movie/allActors">Actors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allActors/">Actors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="/movie/allMovies">Movies<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allMovies/">Movies<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="/movie/allDirectors">Directors<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/movie/allDirectors/">Directors<span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item dropdown">
@@ -61,24 +61,24 @@
 
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="ex: Dhoom" aria-label="Search">
-      <button class="btn btn-success" type="submit" formaction="/movie/movieDetails/0">Search</button>
+      <input  class="form-control mr-sm-2" name="movieSearchQuery" type="search" placeholder="ex: Dhoom" maxlength="100" aria-label="Search">
+      <button class="btn btn-success" type="submit" formaction="/movie/allMovies">Search</button>
     </form>
   </div>
 </nav>
 
 <div id="bg_div">
 
-	<h1>All Movies</h1>
+	<h1>Movies</h1>
 
-	{% if all_list %}
-    {% for movies in all_list %}
+	{% if movieResult %}
+    {% for movies in movieResult %}
     {% if forloop.first %}<div class="row">{% endif %}
 
     <div class="col-sm-2 ">
             
-      <a href="movieDetails/{{ movies.mov_id }}/"> 
-        <img src="http://imgs.abduzeedo.com/files/francois/karlfitzgerald/21607d_313e594e4b1b48bbb25dcc0cdfd258c7_mv2_d_1440_2160_s_2.jpg" width="250px" height="400px"><br>{{ movies.mov_title }}</a>
+      <a href="/movie/movieDetails/{{ movies.mov_id }}/"> 
+        <img src="http://imgs.abduzeedo.com/files/francois/karlfitzgerald/21607d_313e594e4b1b48bbb25dcc0cdfd258c7_mv2_d_1440_2160_s_2.jpg" width="250px" height="400px"><br>{{ movies.mov_title }} <font color="Black">({{movies.mov_year}})</font></a>
     </div>
     {% if forloop.counter|divisibleby:6 %}</div><div class="row">{% endif %}
     {% if forloop.last %}</div>{% endif %}
