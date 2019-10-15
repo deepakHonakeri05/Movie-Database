@@ -74,7 +74,7 @@
     <div class="col-sm-2 ">
 
     <a href="/movie/actorDetails/{{ actor.act_id }}/">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/71rNJQ2g-EL._SY606_.jpg" width="250px" height="400px">
+      <img src={{actor.act_picURL}} width="250px" height="350px">
       <br>{{ actor.act_name }}</a>
     </div>
     {% if forloop.counter|divisibleby:6 %}</div><div class="row">{% endif %}

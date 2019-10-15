@@ -20,7 +20,7 @@
 
   .actorImagePic{
     position: absolute;
-    top: 20px;
+    top: 10px;
     right: 22px;
   }
 
@@ -95,22 +95,39 @@
          {% for actor in Actor %}
           <H2> {{ actor.act_name }}</H2>
           <h3><b>Actor</b></h3>
-         {% endfor %}
-      {% endif %}
-     </div>
-     <div class="actorImagePic">
-       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThs33rkNQgstUnlx89JXkiDx4bFg4gxp-5-pmDZYmJTrqTiVde" width="96px" height="96px">
-    </div>
+          <div class="actorImagePic">
+            <img src={{actor.act_picURL}} width="128px" height="128">
+          </div>
+          {% endfor %}
+    {% endif %}
 
+     </div>
+
+        
   </div> 
   <div class="actorResultsBG">
 
     <div class="actorBio">
-      <h3>Biography</h3>
-      <p>Bilge rat Barbary Coast fire ship knave fire in the hole clipper Jack Ketch gibbet flogging prow. Ahoy avast strike colors topmast belay holystone mizzen main sheet clipper Yellow Jack. Ballast poop deck warp Sail ho Jolly Roger reef sails handsomely pink Shiver me timbers knave. Davy Jones' Locker bilged on her anchor galleon red ensign bilge Yellow Jack spirits run a shot across the bow coxswain hail-shot.<br><br>
+        <h3>Biography</h3>
+        {% if Actor %}
+         {% for actor in Actor %}
+        <p>{{actor.act_bio}}</p>
+         {% endfor %}
+      {% endif %}
 
-    Cat o'nine tails salmagundi pinnace league heave down chase carouser black jack no prey, no pay Letter of Marque. Measured fer yer chains mizzenmast heave down bilged on her anchor main sheet gaff capstan gun cable Brethren of the Coast. Hornswaggle galleon hulk landlubber or just lubber scurvy line port fluke chandler belaying pin. Clap of thunder bucko man-of-war splice the main brace galleon black jack lee brig keel Cat o'nine tails.</p>
     </div> 
+
+    <div class="directorOscars">
+      <h3>Awards Won</h3>
+      <ul>
+        <li>C - ......</li>
+        <li>D - ......</li>
+        <li>E - ......</li>
+<!--        {% for question in latest_question_list %}
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        {% endfor %} -->
+      </ul>
+    </div>
 
     <div class="moviesPlayed">
       <h3>Movies acted</h3>

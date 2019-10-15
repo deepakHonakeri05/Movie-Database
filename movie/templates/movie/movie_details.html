@@ -115,10 +115,14 @@
 
   <div class="movieResults">
   	<div class="movieDescription">
-	  	<h3>Description</h3>
-	  	<p>Bilge rat Barbary Coast fire ship knave fire in the hole clipper Jack Ketch gibbet flogging prow. Ahoy avast strike colors topmast belay holystone mizzen main sheet clipper Yellow Jack. Ballast poop deck warp Sail ho Jolly Roger reef sails handsomely pink Shiver me timbers knave. Davy Jones' Locker bilged on her anchor galleon red ensign bilge Yellow Jack spirits run a shot across the bow coxswain hail-shot.<br><br>
-
-		Cat o'nine tails salmagundi pinnace league heave down chase carouser black jack no prey, no pay Letter of Marque. Measured fer yer chains mizzenmast heave down bilged on her anchor main sheet gaff capstan gun cable Brethren of the Coast. Hornswaggle galleon hulk landlubber or just lubber scurvy line port fluke chandler belaying pin. Clap of thunder bucko man-of-war splice the main brace galleon black jack lee brig keel Cat o'nine tails.</p>
+	  	
+      {% if movie %}
+         {% for movies in movie %}
+          <img src={{movies.movie_picurl}} width="250px" height="400px"><br>
+          <h3>Description</h3>
+	  	      <p>{{ movies.description }}</p>
+        {% endfor %}
+      {% endif %}
   	</div>
 
   	<div class="movieDirectors">
@@ -131,7 +135,7 @@
       {% endfor %}
       </ul>
       {% else %}
-    <p>No polls are available.</p>
+          <p>No directors are available.</p>
       {% endif %}
 
   		</ul>

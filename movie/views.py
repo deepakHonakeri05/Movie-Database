@@ -23,10 +23,12 @@ def signIN(request):
 		userID = str(user_id)
 		passWord = str(password)
 
+		selectedUser = userinfo.objects.raw('''SELECT * FROM movie_userinfo''')	
 
 
-
-	return render(request, '/movie/')
+	# return render(request, '/movie/')
+	template = loader.get_template("movie/signin.html")
+	return HttpResponse(template.render())
 
 def signUP(request):
 	template = loader.get_template("movie/signup.html")
@@ -38,10 +40,10 @@ def allMovies(request):
 
 	if movieName:
 		movie = '%' + str(movieName) + '%'
-		movieResult = movies.objects.raw('''SELECT * FROM movie_movies where mov_title LIKE %s ''',[movie])
+		movieResult = movies.objects.raw('''SELECT * FROM movie_movies where mov_title LIKE %s order by mov_year''',[movie])
 
 	else :
-		movieResult = movies.objects.raw('''SELECT * FROM movie_movies ''')
+		movieResult = movies.objects.raw('''SELECT * FROM movie_movies order by mov_year ''')
 		
 	return render(request, 'movie/allMovies.html', {'movieResult':movieResult})
 
@@ -67,16 +69,15 @@ def allActors(request):
 		actorList = actor.objects.raw('''SELECT * FROM movie_actor where act_name LIKE %s''',[actorName])
 
 	else:
-		actorList = actor.objects.raw('''SELECT * FROM movie_actor''')
+		actorList = actor.objects.raw('''SELECT * FROM movie_actor ''')
 	
 	return render(request, 'movie/allActors.html', {'actorList':actorList})
 
 def movieDetails(request,mov_id):
-	Movie = None
 	movID = int(mov_id)
 
 	Movie = movies.objects.raw('''SELECT * FROM movie_movies where mov_id = %s''',[movID])
-	directorInfo = director.objects.raw('''SELECT * FROM movie_director where dir_id in (SELECT dir_id from movie_movies where mov_id=%s)''',[movID])
+	directorInfo = director.objects.raw('''SELECT * FROM movie_director where dir_id in (SELECT dir_id from movie_movie_directedby where mov_id=%s)''',[movID])
 	#avgRating = rating.objects.raw('''SELECT avg(rev_stars) from movie_rating where mov_id = %s''',[movID])
 
 	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'movie' : Movie})
@@ -86,8 +87,8 @@ def directorDetails(request,dir_id):
 	dirID = int(dir_id)
 
 	Director = director.objects.raw('''SELECT * FROM movie_director where  dir_id=%s''',[dirID])
-	moviesInfo = movies.objects.raw('''SELECT * FROM movie_movies where dir_id in (SELECT dir_id FROM movie_director where dir_id = %s)''',[dirID])
-	return render(request, 'movie/director_details.html', {'Director':Director , 'moviesInfo':moviesInfo})
+	moviesInfo = movies.objects.raw('''SELECT * FROM movie_movies where mov_id in (SELECT mov_id FROM movie_movie_directedby where dir_id = %s)''',[dirID])
+	return render(request, 'movie/director_details.html', {'Director':Director ,'moviesInfo':moviesInfo})  # 'moviesInfo':moviesInfo
 
 def actorDetails(request,act_id):
 	Actor = None

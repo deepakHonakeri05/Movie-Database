@@ -99,7 +99,7 @@
      </div>
 
      <div class="directorImagePic">
-       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThs33rkNQgstUnlx89JXkiDx4bFg4gxp-5-pmDZYmJTrqTiVde" width="96px" height="96px">
+       <img src= {{director.dir_picURL}} width="96px" height="96px">
        <br>
        <img src="https://image.flaticon.com/icons/svg/60/60720.svg" width="12px" height="12px">
        <font color="blue">Contact</font> : {{ director.dir_phone }} </li>
@@ -112,13 +112,15 @@
 
     <div class="directorBio">
       <h3>Biography</h3>
-      <p>Bilge rat Barbary Coast fire ship knave fire in the hole clipper Jack Ketch gibbet flogging prow. Ahoy avast strike colors topmast belay holystone mizzen main sheet clipper Yellow Jack. Ballast poop deck warp Sail ho Jolly Roger reef sails handsomely pink Shiver me timbers knave. Davy Jones' Locker bilged on her anchor galleon red ensign bilge Yellow Jack spirits run a shot across the bow coxswain hail-shot.<br><br>
-
-    Cat o'nine tails salmagundi pinnace league heave down chase carouser black jack no prey, no pay Letter of Marque. Measured fer yer chains mizzenmast heave down bilged on her anchor main sheet gaff capstan gun cable Brethren of the Coast. Hornswaggle galleon hulk landlubber or just lubber scurvy line port fluke chandler belaying pin. Clap of thunder bucko man-of-war splice the main brace galleon black jack lee brig keel Cat o'nine tails.</p>
+      {% if Director %}
+         {% for director in Director %}
+             <p>{{ director.dir_bio }}</p>
+          {% endfor %}
+      {% endif %}
     </div>
 
     <div class="directorOscars">
-      <h3>Oscars Won</h3>
+      <h3>Awards Won</h3>
       <ul>
         <li>C - ......</li>
         <li>D - ......</li>

@@ -78,9 +78,9 @@
     <div class="col-sm-2 ">
             
       <a href="/movie/movieDetails/{{ movies.mov_id }}/"> 
-        <img src="http://imgs.abduzeedo.com/files/francois/karlfitzgerald/21607d_313e594e4b1b48bbb25dcc0cdfd258c7_mv2_d_1440_2160_s_2.jpg" width="250px" height="400px"><br>{{ movies.mov_title }} <font color="Black">({{movies.mov_year}})</font></a>
+        <img src={{movies.movie_picurl}} width="250px" height="400px"><br>{{ movies.mov_title }} <font color="Black">({{movies.mov_year}})</font></a>
     </div>
-    {% if forloop.counter|divisibleby:6 %}</div><div class="row">{% endif %}
+    {% if forloop.counter|divisibleby:5 %}</div><div class="row">{% endif %}
     {% if forloop.last %}</div>{% endif %}
 {% endfor %}
 {% else %}
