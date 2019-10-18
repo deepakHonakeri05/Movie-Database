@@ -78,17 +78,13 @@
         </div>
       </li>
 
-		<li class="nav-item">
+		  <li class="nav-item">
         	<a class="nav-link" href="https://github.com/deepakHonakeri05/Movie-Database">Project Link<span class="sr-only"></span></a>
       </li>
 
     </ul>
 
-<!--     	<form class="form-inline my-2 my-lg-0">
-      		<input class="form-control mr-sm-2" type="search" placeholder="ex: Dhoom" aria-label="Search">
-     		 <button class="btn btn-success" type="submit">Search</button>
-    	</form> -->
-    </div>
+  </div>
   </nav>
 
 
@@ -97,18 +93,20 @@
   	<div class ="movieNameRatingContainer">
       {% if movie %}
          {% for movies in movie %}
-	        <H2> {{ movies.mov_title }}</H2>
+	        <H2> {{ movies.mov_title }} <H4>({{ movies.mov_lang}})</H4></H2>
 	        <h3>{{ movies.mov_year }}</h3>
          {% endfor %}
       {% endif %}
 
 	    <div class="movieRating">
-<!--       {% if avgRating %}
-         for {% for rating in avgRating %}  --> 
+        {% if movie %}
+         {% for movies in movie %}
 		      <h6>Average Rating : {{ avgRating }} </h6>
-<!--         {% endfor %}
-      {% endif %} -->
-		    <button class="btn btn-warning" type="submit">Rate</button>
+          <form>
+            <button class="btn btn-warning" type="submit" formaction="/movie/rating/{{ movies.mov_id }}/">Rate</button>
+          </form>
+          {% endfor %}
+      {% endif %}
 	    </div>
 	   </div>
   </div>

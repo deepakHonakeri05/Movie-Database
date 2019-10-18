@@ -17,3 +17,7 @@ class signUpForm(forms.Form):
 	emailQuery = forms.CharField(label='emailQuery', max_length=20)
 	useridQuery = forms.CharField(label='useridQuery', max_length=20)
 	passwordQuery = forms.CharField(label='passwordQuery', max_length=20)
+
+class reviewForm(forms.Form):
+	reviewStarsQuery = forms.CharField(label='reviewStarsQuery',max_length=10)
+	reviewTextQuery = forms.CharField(label='reviewTextQuery',max_length=100)

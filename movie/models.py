@@ -69,7 +69,7 @@ class rating(models.Model):
 		unique_together = (("user_id", "mov_id"),)
 	user_id = models.ForeignKey(userinfo,on_delete=models.CASCADE,db_column='user_id')
 	mov_id = models.ForeignKey(movies,on_delete=models.PROTECT,db_column='mov_id')
-	stars = models.DecimalField(max_digits=2, decimal_places=2)
+	stars = models.IntegerField()
 	reviews = models.CharField(max_length=100)
 	def __str__(self):
 		return self.str(stars)
