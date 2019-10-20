@@ -10,11 +10,17 @@
         body {
             background-color: #303641;
         }
+	.alert-danger {
+	  color: #721c24;
+	  background-color: #f8d7da;
+	  border-color: #f5c6cb;
+	}
     </style>
 </head>
 
 <body>
-    <div id="container-login">
+    <div id="container-login">		
+	
         <div id="title">
             <i class="material-icons lock">lock</i> Login
         </div>
@@ -55,6 +61,10 @@
             Don't have an account yet?
             <a href="/movie/signup"><button id="register-link">Register here</button></a>
         </div>
+	{% if alert %}
+	<div class="alert alert-danger" role="alert"> Check password and user id
+	</div>
+	{% endif %}
     </div>
 </body>
 

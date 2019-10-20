@@ -72,4 +72,4 @@ class rating(models.Model):
 	stars = models.IntegerField()
 	reviews = models.CharField(max_length=100)
 	def __str__(self):
-		return self.str(stars)
+		return self.str(user_id)

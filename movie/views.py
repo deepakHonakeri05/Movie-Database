@@ -30,16 +30,20 @@ def signIN(request):
 		selectedUser = userinfo.objects.raw('''SELECT * FROM movie_userinfo where user_id = %s and password = %s''',[userID,passWord])
 
 		if selectedUser :
+			#userSigned = "signed"
 			user_id = request.GET['useridQuery']
 			userIDGlobal = user_id	
-			template = loader.get_template("movie/root.html")
-			return HttpResponse(template.render())
+			userSigned = user_id
+			return render(request, 'movie/root.html', {'userSigned': userSigned})
 
-		else:
-			return HttpResponse("Your username and password didn't match.")
+		else:	
+			alert = "alert"
+			return render(request, 'movie/signin.html', {'alert': alert})
+			#return HttpResponse("Your username and password didn't match.")
 
-	template = loader.get_template("movie/signin.html")
-	return HttpResponse(template.render())
+	else :
+		template = loader.get_template("movie/signin.html")
+		return HttpResponse(template.render())
 
 def signUP(request):
 	user_id = request.GET.get('useridQuery')
@@ -60,8 +64,9 @@ def signUP(request):
 		else :
 			return HttpResponse("user_id is taken ...try again ")
 
-	template = loader.get_template("movie/signup.html")
-	return HttpResponse(template.render())
+	else :
+		template = loader.get_template("movie/signup.html")
+		return HttpResponse(template.render())
 
 def logout(request):
 	global userIDGlobal
@@ -117,8 +122,9 @@ def movieDetails(request,mov_id):
 	Movie = movies.objects.raw('''SELECT * FROM movie_movies where mov_id = %s''',[movID])
 	directorInfo = director.objects.raw('''SELECT * FROM movie_director where dir_id in (SELECT dir_id from movie_movie_directedby where mov_id=%s)''',[movID])
 	#avgRating = rating.objects.raw('''SELECT avg(rev_stars) from movie_rating where mov_id = %s''',[movID])
+	reviews = rating.objects.raw('''SELECT * FROM movie_rating where mov_id=%s''',[movID])	
 
-	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'movie' : Movie})
+	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'movie' : Movie,'reviews':reviews})
 
 def directorDetails(request,dir_id):
 	Director = None
@@ -147,20 +153,15 @@ def movieRating(request,mov_id):
 	checkReview = rating.objects.raw(''' SELECT * FROM movie_rating WHERE user_id = %s and mov_id = %s''',[user_id,movID])		
 
 	if reviewStarsQuery and reviewTextQuery and userIDGlobal:
+		cursor = connection.cursor()
 
 		if checkReview :
-			#return HttpResponse("You can't rate more than once")
-			cursor = connection.cursor()
 			cursor.execute('''DELETE FROM movie_rating where mov_id = %s and user_id=%s''',[mov_id,user_id])
-			newReview = ''' INSERT into  movie_rating (stars,reviews,mov_id,user_id) values (%s,%s,%s,%s) '''
-			cursor.execute(newReview,[reviewStarsQuery,reviewTextQuery,mov_id,user_id])
-			return HttpResponse("Rating saved")
-
-		else :
-			cursor = connection.cursor()
-			newReview = ''' INSERT into  movie_rating (stars,reviews,mov_id,user_id) values (%s,%s,%s,%s) '''
-			cursor.execute(newReview,[reviewStarsQuery,reviewTextQuery,mov_id,user_id])
-			return HttpResponse("Rating saved")
+			
+		newReview = ''' INSERT into  movie_rating (stars,reviews,mov_id,user_id) values (%s,%s,%s,%s) '''
+		cursor.execute(newReview,[reviewStarsQuery,reviewTextQuery,mov_id,user_id])
+		reviewSaved = "review saved"
+		return  render(request, 'movie/rate_movie.html',{'reviewSaved':reviewSaved})
 
 	elif userIDGlobal or checkReview :
 		Movie = movies.objects.raw('''SELECT * FROM movie_movies where mov_id = %s''',[movID])

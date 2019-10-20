@@ -37,7 +37,7 @@
 
       <div class="form-group col-md-6">
         <label for="inputBiography">Review</label>
-        <textarea name="reviewTextQuery" class="form-control" id="inputBiography"  required rows="4">Update : {{rev.reviews}}</textarea>
+        <textarea name="reviewTextQuery" class="form-control" id="inputBiography"  required rows="4"> {{rev.reviews}}</textarea>
       </div>
       {% endfor %}
 
@@ -64,6 +64,9 @@
   </div>
   <button type="submit" class="btn btn-primary">Save Review</button>
   </form>
+  {% if reviewSaved %}
+    <div class="alert alert-success" role="alert"> Review Saved </div>
+  {% endif %}	
 
 </form>
 </body>

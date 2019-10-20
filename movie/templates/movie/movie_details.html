@@ -27,12 +27,6 @@
 
 	</style>
 
-	<script type="text/javascript" href="rating.js">
-		// Rating Initialization
-		$(document).ready(function() {
-		  $('#rateMe3').mdbRate();
-		});
-	</script>
 
 </head>
 <body>
@@ -150,7 +144,18 @@
     		{% endfor %} -->
   		</ul>
   	</div>
-
+	
+	<div class="movieReview">
+		<h3>Movie Reviews</h3>
+		{% if reviews %}
+		  {% for rev in reviews %}
+			<div class ="form-row">			
+			<li> <b>User ID : </b>{{ rev.user_id }} <br><b> Stars : </b> {{rev.stars}} <br> <b>Review : </b> {{ rev.reviews }}  </li>
+			</div>
+		 {% endfor %}
+		{% else %}
+		  <h5> <b> No reviews. </b></h5>
+		{% endif %}
   </div>
 
 </body>
