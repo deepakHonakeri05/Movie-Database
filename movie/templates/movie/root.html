@@ -112,7 +112,7 @@ body{
     </ul>
     <form>
     {% if userSigned %}
-        <button class="btn btn-danger" type="submit" formaction="/movie/logout">Log out : {{ userSigned }}</button>
+        <button class="btn btn-danger" type="submit" formaction="/movie">Log out : {{ userSigned }}</button>
     {% else %}		
       <button class="btn btn-success" type="submit" formaction="/movie/signin">Sign In</button>
       <button class="btn btn-success" type="submit" formaction="/movie/signup">Sign Up</button>
