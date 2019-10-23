@@ -14,6 +14,6 @@ urlpatterns = [
     path('directorDetails/<int:dir_id>/',views.directorDetails),
     path('actorDetails/<int:act_id>/',views.actorDetails),
     path('signin/',views.signIN),
-    path('signup/',views.signUP),
-    path('logout/',views.logout)
+    path('signup/',views.signUP)
+    #path('',views.logout)
 ]

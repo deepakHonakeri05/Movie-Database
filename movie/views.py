@@ -12,14 +12,20 @@ from django.db import connection,transaction
 from .forms import movieSearchForm, actorSearchForm, directorSearchForm, signInForm, signUpForm, reviewForm
 
 userIDGlobal = None
+signInLandingPage = 'movie/root.html'
 
 def root(request):
+	global userIDGlobal
+
+	userIDGlobal = None
 	template = loader.get_template("movie/root.html")
 	return HttpResponse(template.render())
 	
 
 def signIN(request):
 	global userIDGlobal
+	global signInLandingPage
+
 	user_id = request.GET.get('useridQuery')
 	password = request.GET.get('passwordQuery')
 
@@ -34,13 +40,11 @@ def signIN(request):
 			user_id = request.GET['useridQuery']
 			userIDGlobal = user_id	
 			userSigned = user_id
-			return render(request, 'movie/root.html', {'userSigned': userSigned})
+			return render(request, signInLandingPage, {'userSigned': userSigned})
 
 		else:	
 			alert = "alert"
 			return render(request, 'movie/signin.html', {'alert': alert})
-			#return HttpResponse("Your username and password didn't match.")
-
 	else :
 		template = loader.get_template("movie/signin.html")
 		return HttpResponse(template.render())
@@ -68,13 +72,13 @@ def signUP(request):
 		template = loader.get_template("movie/signup.html")
 		return HttpResponse(template.render())
 
-def logout(request):
-	global userIDGlobal
+# def logout(request):
+# 	global userIDGlobal
 
-	userIDGlobal = None
+# 	userIDGlobal = None
 
-	template = loader.get_template("movie/root.html")
-	return HttpResponse(template.render())
+# 	template = loader.get_template("movie/root.html")
+# 	return HttpResponse(template.render())
 
 def allMovies(request):
 	
@@ -117,14 +121,21 @@ def allActors(request):
 	return render(request, 'movie/allActors.html', {'actorList':actorList})
 
 def movieDetails(request,mov_id):
+	global userIDGlobal
 	movID = int(mov_id)
 
 	Movie = movies.objects.raw('''SELECT * FROM movie_movies where mov_id = %s''',[movID])
 	directorInfo = director.objects.raw('''SELECT * FROM movie_director where dir_id in (SELECT dir_id from movie_movie_directedby where mov_id=%s)''',[movID])
-	#avgRating = rating.objects.raw('''SELECT avg(rev_stars) from movie_rating where mov_id = %s''',[movID])
-	reviews = rating.objects.raw('''SELECT * FROM movie_rating where mov_id=%s''',[movID])	
 
-	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'movie' : Movie,'reviews':reviews})
+	reviews = rating.objects.raw('''SELECT * FROM movie_rating where mov_id=%s''',[movID])
+	avgRating=0
+	for p in reviews:
+		avgRating += p.stars
+
+	if avgRating != 0:
+		avgRating /= len(reviews)
+    
+	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'movie':Movie, 'reviews':reviews,'avgRating':avgRating})
 
 def directorDetails(request,dir_id):
 	Director = None
@@ -144,6 +155,8 @@ def actorDetails(request,act_id):
 
 def movieRating(request,mov_id):
 	global userIDGlobal
+	global signInLandingPage
+
 	movID = int(mov_id)
 
 	user_id = userIDGlobal 
@@ -161,6 +174,7 @@ def movieRating(request,mov_id):
 		newReview = ''' INSERT into  movie_rating (stars,reviews,mov_id,user_id) values (%s,%s,%s,%s) '''
 		cursor.execute(newReview,[reviewStarsQuery,reviewTextQuery,mov_id,user_id])
 		reviewSaved = "review saved"
+		signInLandingPage = 'movie/root.html'
 		return  render(request, 'movie/rate_movie.html',{'reviewSaved':reviewSaved})
 
 	elif userIDGlobal or checkReview :
@@ -168,5 +182,6 @@ def movieRating(request,mov_id):
 		return render(request, 'movie/rate_movie.html',{'movie' : Movie , 'review':checkReview})		
 
 	else :
-		return HttpResponse("You need to log in to rate")
+		signInLandingPage = 'movie/rate_movie.html'
+		return signIN(request)
 	
