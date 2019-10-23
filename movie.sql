@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.17, for osx10.13 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.27, for Linux (x86_64)
 --
 -- Host: localhost    Database: DBMSmovieProject
 -- ------------------------------------------------------
--- Server version	8.0.17
+-- Server version	5.7.27-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,13 +21,13 @@
 
 DROP TABLE IF EXISTS `auth_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_group_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_group_permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `auth_group_permissions` (
   KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,16 +73,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_permission`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
   `content_type_id` int(11) NOT NULL,
-  `codename` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `codename` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,22 +101,22 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `password` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(128) NOT NULL,
   `last_login` datetime(6) DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
-  `first_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `last_name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(254) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_user_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_user_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE `auth_user_groups` (
   KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
   CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
   CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +163,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `auth_user_user_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_user_user_permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -173,7 +173,7 @@ CREATE TABLE `auth_user_user_permissions` (
   KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,14 +191,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `django_admin_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `django_admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `action_time` datetime(6) NOT NULL,
-  `object_id` longtext COLLATE utf8mb4_general_ci,
-  `object_repr` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
   `action_flag` smallint(5) unsigned NOT NULL,
-  `change_message` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `change_message` longtext NOT NULL,
   `content_type_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -206,7 +206,7 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,14 +225,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `django_content_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `django_content_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `app_label` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `model` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,14 +251,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `django_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `django_migrations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `app` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +267,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2019-10-12 11:24:40.981066'),(2,'auth','0001_initial','2019-10-12 11:24:41.082334'),(3,'admin','0001_initial','2019-10-12 11:24:41.297807'),(4,'admin','0002_logentry_remove_auto_add','2019-10-12 11:24:41.354114'),(5,'admin','0003_logentry_add_action_flag_choices','2019-10-12 11:24:41.364221'),(6,'contenttypes','0002_remove_content_type_name','2019-10-12 11:24:41.445011'),(7,'auth','0002_alter_permission_name_max_length','2019-10-12 11:24:41.475961'),(8,'auth','0003_alter_user_email_max_length','2019-10-12 11:24:41.503290'),(9,'auth','0004_alter_user_username_opts','2019-10-12 11:24:41.515034'),(10,'auth','0005_alter_user_last_login_null','2019-10-12 11:24:41.549582'),(11,'auth','0006_require_contenttypes_0002','2019-10-12 11:24:41.552277'),(12,'auth','0007_alter_validators_add_error_messages','2019-10-12 11:24:41.562369'),(13,'auth','0008_alter_user_username_max_length','2019-10-12 11:24:41.600613'),(14,'auth','0009_alter_user_last_name_max_length','2019-10-12 11:24:41.638104'),(15,'auth','0010_alter_group_name_max_length','2019-10-12 11:24:41.657773'),(16,'auth','0011_update_proxy_permissions','2019-10-12 11:24:41.668088'),(17,'movie','0001_initial','2019-10-12 11:24:41.683150'),(18,'movie','0002_blogs','2019-10-12 11:24:41.697383'),(19,'movie','0003_details','2019-10-12 11:24:41.711172'),(20,'movie','0004_auto_20190909_1645','2019-10-12 11:24:41.730883'),(21,'movie','0005_blogs_details_junk_person','2019-10-12 11:24:41.777967'),(22,'movie','0006_auto_20190909_1646','2019-10-12 11:24:41.801226'),(23,'movie','0007_person','2019-10-12 11:24:41.817956'),(24,'movie','0008_blogs','2019-10-12 11:24:41.831528'),(25,'movie','0009_auto_20190909_1652','2019-10-12 11:24:41.844008'),(26,'movie','0010_person','2019-10-12 11:24:41.862775'),(27,'sessions','0001_initial','2019-10-12 11:24:41.880327'),(28,'movie','0011_auto_20191012_1128','2019-10-12 11:28:54.639384'),(29,'movie','0012_auto_20191012_1152','2019-10-12 11:52:51.445244'),(30,'movie','0013_auto_20191012_1158','2019-10-12 11:58:44.641626'),(31,'movie','0014_auto_20191013_0453','2019-10-13 04:53:45.579021'),(32,'movie','0015_auto_20191013_0738','2019-10-13 07:38:10.077027');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2019-10-12 11:24:40.981066'),(2,'auth','0001_initial','2019-10-12 11:24:41.082334'),(3,'admin','0001_initial','2019-10-12 11:24:41.297807'),(4,'admin','0002_logentry_remove_auto_add','2019-10-12 11:24:41.354114'),(5,'admin','0003_logentry_add_action_flag_choices','2019-10-12 11:24:41.364221'),(6,'contenttypes','0002_remove_content_type_name','2019-10-12 11:24:41.445011'),(7,'auth','0002_alter_permission_name_max_length','2019-10-12 11:24:41.475961'),(8,'auth','0003_alter_user_email_max_length','2019-10-12 11:24:41.503290'),(9,'auth','0004_alter_user_username_opts','2019-10-12 11:24:41.515034'),(10,'auth','0005_alter_user_last_login_null','2019-10-12 11:24:41.549582'),(11,'auth','0006_require_contenttypes_0002','2019-10-12 11:24:41.552277'),(12,'auth','0007_alter_validators_add_error_messages','2019-10-12 11:24:41.562369'),(13,'auth','0008_alter_user_username_max_length','2019-10-12 11:24:41.600613'),(14,'auth','0009_alter_user_last_name_max_length','2019-10-12 11:24:41.638104'),(15,'auth','0010_alter_group_name_max_length','2019-10-12 11:24:41.657773'),(16,'auth','0011_update_proxy_permissions','2019-10-12 11:24:41.668088'),(17,'movie','0001_initial','2019-10-12 11:24:41.683150'),(18,'movie','0002_blogs','2019-10-12 11:24:41.697383'),(19,'movie','0003_details','2019-10-12 11:24:41.711172'),(20,'movie','0004_auto_20190909_1645','2019-10-12 11:24:41.730883'),(21,'movie','0005_blogs_details_junk_person','2019-10-12 11:24:41.777967'),(22,'movie','0006_auto_20190909_1646','2019-10-12 11:24:41.801226'),(23,'movie','0007_person','2019-10-12 11:24:41.817956'),(24,'movie','0008_blogs','2019-10-12 11:24:41.831528'),(25,'movie','0009_auto_20190909_1652','2019-10-12 11:24:41.844008'),(26,'movie','0010_person','2019-10-12 11:24:41.862775'),(27,'sessions','0001_initial','2019-10-12 11:24:41.880327'),(28,'movie','0011_auto_20191012_1128','2019-10-12 11:28:54.639384'),(29,'movie','0012_auto_20191012_1152','2019-10-12 11:52:51.445244'),(30,'movie','0013_auto_20191012_1158','2019-10-12 11:58:44.641626'),(31,'movie','0014_auto_20191013_0453','2019-10-13 04:53:45.579021'),(32,'movie','0015_auto_20191013_0738','2019-10-13 07:38:10.077027'),(33,'movie','0016_auto_20191018_1404','2019-10-19 04:15:22.999287');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,14 +277,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `django_session`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `django_session` (
-  `session_key` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
-  `session_data` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
   `expire_date` datetime(6) NOT NULL,
   PRIMARY KEY (`session_key`),
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,6 +293,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('uw36e019ny9d8ad4nlmmosmftmkkck3m','MzZlZWIyZjhkMzcxZTkyMWRmNGExNWMyZjk3NmM0YmZjZDU4ZjI2Mjp7InVzZXJfaWQiOm51bGx9','2019-11-02 07:15:25.361942');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,15 +303,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_actor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_actor` (
   `act_id` int(11) NOT NULL,
-  `act_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `act_gender` varchar(1) COLLATE utf8mb4_general_ci NOT NULL,
-  `act_bio` varchar(10000) COLLATE utf8mb4_general_ci NOT NULL,
-  `act_picURL` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `act_name` varchar(50) NOT NULL,
+  `act_gender` varchar(1) NOT NULL,
+  `act_bio` varchar(10000) NOT NULL,
+  `act_picURL` varchar(500) NOT NULL,
   PRIMARY KEY (`act_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,15 +330,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_director`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_director` (
   `dir_id` int(11) NOT NULL,
-  `dir_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `dir_name` varchar(50) NOT NULL,
   `dir_phone` int(11) NOT NULL,
-  `dir_bio` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
-  `dir_picURL` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `dir_bio` varchar(500) NOT NULL,
+  `dir_picURL` varchar(500) NOT NULL,
   PRIMARY KEY (`dir_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +357,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_movie_directedby`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_movie_directedby` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dir_id` int(11) NOT NULL,
@@ -366,7 +367,7 @@ CREATE TABLE `movie_movie_directedby` (
   KEY `movie_movie_directedby_dir_id_49b78540_fk_movie_director_dir_id` (`dir_id`),
   CONSTRAINT `movie_movie_directedby_dir_id_49b78540_fk_movie_director_dir_id` FOREIGN KEY (`dir_id`) REFERENCES `movie_director` (`dir_id`),
   CONSTRAINT `movie_movie_directedby_mov_id_0fdc1f33_fk_movie_movies_mov_id` FOREIGN KEY (`mov_id`) REFERENCES `movie_movies` (`mov_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,15 +386,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_movieactor_awards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_movieactor_awards` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `awards` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `awards` varchar(50) NOT NULL,
   `act_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `movie_movieactor_awards_act_id_id_awards_d9e34cbe_uniq` (`act_id`,`awards`),
   CONSTRAINT `movie_movieactor_awards_act_id_1400e285_fk_movie_actor_act_id` FOREIGN KEY (`act_id`) REFERENCES `movie_actor` (`act_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,10 +412,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_moviecast`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_moviecast` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(30) NOT NULL,
   `act_id` int(11) NOT NULL,
   `mov_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -422,7 +423,7 @@ CREATE TABLE `movie_moviecast` (
   KEY `movie_moviecast_mov_id_aedbf211_fk_movie_movies_mov_id` (`mov_id`),
   CONSTRAINT `movie_moviecast_act_id_3d870a94_fk_movie_actor_act_id` FOREIGN KEY (`act_id`) REFERENCES `movie_actor` (`act_id`),
   CONSTRAINT `movie_moviecast_mov_id_aedbf211_fk_movie_movies_mov_id` FOREIGN KEY (`mov_id`) REFERENCES `movie_movies` (`mov_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,15 +441,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_moviedirector_awards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_moviedirector_awards` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `awards` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `awards` varchar(50) NOT NULL,
   `dir_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `movie_moviedirector_awards_dir_id_id_awards_12ce9a85_uniq` (`dir_id`,`awards`),
   CONSTRAINT `movie_moviedirector__dir_id_7df4e5b6_fk_movie_dir` FOREIGN KEY (`dir_id`) REFERENCES `movie_director` (`dir_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -466,16 +467,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_movies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_movies` (
   `mov_id` int(11) NOT NULL,
-  `mov_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `mov_title` varchar(50) NOT NULL,
   `mov_year` int(11) NOT NULL,
-  `mov_lang` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(300) COLLATE utf8mb4_general_ci NOT NULL,
-  `movie_picurl` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `mov_lang` varchar(30) NOT NULL,
+  `description` varchar(300) NOT NULL,
+  `movie_picurl` varchar(100) NOT NULL,
   PRIMARY KEY (`mov_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,11 +495,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_rating`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_rating` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stars` decimal(2,2) NOT NULL,
-  `reviews` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `stars` int(11) NOT NULL,
+  `reviews` varchar(100) NOT NULL,
   `mov_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -506,7 +507,7 @@ CREATE TABLE `movie_rating` (
   KEY `movie_rating_mov_id_a1278d2f_fk_movie_movies_mov_id` (`mov_id`),
   CONSTRAINT `movie_rating_mov_id_a1278d2f_fk_movie_movies_mov_id` FOREIGN KEY (`mov_id`) REFERENCES `movie_movies` (`mov_id`),
   CONSTRAINT `movie_rating_user_id_fa5cbd0f_fk_movie_userinfo_user_id` FOREIGN KEY (`user_id`) REFERENCES `movie_userinfo` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -515,6 +516,7 @@ CREATE TABLE `movie_rating` (
 
 LOCK TABLES `movie_rating` WRITE;
 /*!40000 ALTER TABLE `movie_rating` DISABLE KEYS */;
+INSERT INTO `movie_rating` VALUES (4,2,'dont watch it ',104,1001),(8,1,' qwedwderwerwerwe',105,1001),(13,2,'    Really bad movie dont watch',103,1001),(15,8,'Nice movie',103,1212121),(16,9,'Amazing movie!',104,1212121);
 /*!40000 ALTER TABLE `movie_rating` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -524,13 +526,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movie_userinfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movie_userinfo` (
   `user_id` int(11) NOT NULL,
-  `password` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `email` varchar(20) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -539,6 +541,7 @@ CREATE TABLE `movie_userinfo` (
 
 LOCK TABLES `movie_userinfo` WRITE;
 /*!40000 ALTER TABLE `movie_userinfo` DISABLE KEYS */;
+INSERT INTO `movie_userinfo` VALUES (1001,'qwerty','xyz@gmail.com'),(1212121,'qwertyu','xyz@gmail.com');
 /*!40000 ALTER TABLE `movie_userinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -551,4 +554,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-15 10:31:13
+-- Dump completed on 2019-10-23 12:13:06
