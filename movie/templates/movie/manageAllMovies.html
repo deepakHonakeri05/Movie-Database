@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Manage Movies</title>
+</head>
+<body>
+
+ <h1>Manage Movies</h1>
+  {% if movieResult %}
+    {% for movies in movieResult %}
+    <!-- {% if forloop.first %}<div class="row">{% endif %}
+
+    <div class="col-sm-2 ">
+     <        -->
+     <ul>
+     <li>
+      <a href="/movie/editMovie/{{ movies.mov_id }}/"> 
+        <!-- <img src={{movies.movie_picurl}} width="250px" height="400px"><br> -->{{ movies.mov_title }} <font color="Black">({{movies.mov_year}})</font></a>
+    <!-- </div> -->
+    </li>
+</ul>
+<!--     {% if forloop.counter|divisibleby:5 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %} -->
+{% endfor %}
+{% else %}
+    <p>No Movies are available.</p>
+{% endif %}
+
+</body>
+</html>

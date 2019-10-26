@@ -25,14 +25,14 @@ class director(models.Model):
 class movieactor_awards(models.Model):
 	class Meta:
 		unique_together = (("act_id", "awards"),)
-	act_id = models.ForeignKey(actor,on_delete=models.CASCADE,db_column='act_id')
+	act_id = models.ForeignKey(actor,on_delete=models.CASCADE,db_column='act_id',primary_key=True)
 	awards = models.CharField(max_length=50)
 
 
 class moviedirector_awards(models.Model):
 	class Meta:
 		unique_together = (("dir_id", "awards"),)
-	dir_id = models.ForeignKey(director,on_delete=models.CASCADE,db_column='dir_id')  ##on delete = setnull
+	dir_id = models.ForeignKey(director,on_delete=models.CASCADE,db_column='dir_id',primary_key=True)  ##on delete = setnull
 	awards = models.CharField(max_length=50)
 
 class movies(models.Model):
@@ -67,8 +67,8 @@ class userinfo(models.Model):
 class rating(models.Model):
 	class Meta:
 		unique_together = (("user_id", "mov_id"),)
-	user_id = models.ForeignKey(userinfo,on_delete=models.CASCADE,db_column='user_id')
-	mov_id = models.ForeignKey(movies,on_delete=models.PROTECT,db_column='mov_id')
+	user_id = models.ForeignKey(userinfo,on_delete=models.CASCADE,db_column='user_id',primary_key=True)
+	mov_id = models.ForeignKey(movies,on_delete=models.CASCADE,db_column='mov_id')
 	stars = models.IntegerField()
 	reviews = models.CharField(max_length=100)
 	def __str__(self):

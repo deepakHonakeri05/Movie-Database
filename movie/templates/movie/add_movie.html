@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Add Movie</title>
-	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 
 	<style type="text/css">
 
@@ -18,97 +18,67 @@
  
 <h1>Add Movie Details</h1>
 
-<form>
-
-<form>
-  <div class="form-row align-items-center">
-    <div class="col-sm-3 my-1">
-      <label  for="inlineFormInputName">Name</label>
-      <input type="text" class="form-control" id="inlineFormInputName" placeholder="ex: Transformers">
-    </div>
-    <div class="col-sm-3 my-1">
-      <label for="inlineFormInputGroupUsername">Movie ID</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">@</div>
+{% if movieResult %}
+{% for movie in movieResult %}
+  <form>
+    <div class="form-row align-items-center">
+      <div class="col-sm-3 my-1">
+        <label  for="inlineFormInputName">Name</label>
+          <input type="text" name="movieNameQuery" class="form-control" id="inlineFormInputName" placeholder="ex: Transformers" value="{{movie.mov_title}}">
+      </div>
+      <div class="col-sm-3 my-1">
+        <label for="inlineFormInputGroupUsername">Movie ID</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">@</div>
+          </div>
+          <input type="text" name="movieIDQuery" class="form-control" id="inlineFormInputID" placeholder="ex: transformers_2012" value="{{movie.mov_id}}">
         </div>
-        <input type="text" class="form-control" id="inlineFormInputID" placeholder="ex: transformers_2012">
+      </div>
+
+    </div>
+  </form>
+
+    <div class="form-row">
+
+    	<div class="form-group col-md-3">
+        <label for="inputMovieLanguage">Language</label>
+          <input type="text" name="movieLangQuery" class="form-control" id="movieLangQuery" value="{{movie.mov_lang}}">
+      </div>
+
+  	<div class="form-group col-md-3">
+        <label for="inputMovieYear">Year Released</label>
+           <input type="text" name="movieYearQuery" class="form-control" id="movieYearQuery" value="{{movie.mov_year}}">
+      </div>
+<!-- 
+      <div class="col-sm-2 my-1">
+        <label for="inlineFormInputGroupUsername">Director ID</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">@</div>
+          </div>
+          <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="ex: cameron123">
+        </div>
+      </div> -->
+
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputMovieDesc">Movie Description</label>
+        <textarea class="form-control" name="movieDescriptionQuery" id="inputMovieDesc" rows="4">{{movie.description}}</textarea>
       </div>
     </div>
 
-  </div>
-</form>
-
-  <div class="form-row">
-
-  	<div class="form-group col-md-2">
-      <label for="inputMovieLanguage">Language</label>
-      <select id="inputMovieLanguage" class="form-control">
-        <option selected>Choose...</option>
-        <option>English</option>
-        <option>Hindi</option>
-        <option>Telegu</option>
-        <option>Tamil</option>
-        <option>Kannada</option>
-        <option>Marathi</option>
-        <option>Malayalam</option>
-        <option>Spanish</option>
-        <option>Chinese</option>
-        <option>Japanese</option>
-
-      </select>
-    </div>
-
-	<div class="form-group col-md-2">
-      <label for="inputMovieYear">Year Released</label>
-      <select id="inputMovieYear" class="form-control">
-        <option selected>Choose...</option>
-        <option>2019</option>
-        <option>2018</option>
-        <option>2017</option>
-        <option>2016</option>
-        <option>2015</option>
-        <option>2014</option>
-        <option>2013</option>
-        <option>2012</option>
-        <option>2011</option>
-        <option>2010</option>
-        <option>2009</option>
-        <option>2008</option>
-        <option>2007</option>
-        <option>2006</option>
-        <option>2005</option>
-        <option>2004</option>
-        <option>2003</option>
-        <option>2002</option>
-        <option>2001</option>
-        <option>1999</option>
-        <option>1998</option>
-        <option>1997</option>
-        <option>1996</option>
-        <option>1995</option>
-      </select>
-    </div>
-
-    <div class="col-sm-2 my-1">
-      <label for="inlineFormInputGroupUsername">Director ID</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">@</div>
-        </div>
-        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="ex: cameron123">
+    <div class="form-row"> 
+      <div class="form-group col-md-6"> 
+        <label for="inputMovieURL">Movie Poster URL</label>
+          <input type="text" name="moviePosterURL" class="form-control" id="moviePosterURL" value="{{movie.movie_picurl}}">
       </div>
     </div>
 
-  </div>
-
-  <div class="form-group col-md-6">
-    <label for="inputMovieDesc">Movie Description</label>
-    <textarea class="form-control" id="inputMovieDesc" rows="4"></textarea>
-  </div>
-
-
-  </div>
+    </div>
+    {% endfor %}
+   {% endif %}
   <button type="submit" class="btn btn-primary">Save Movie</button>
 </form>
 

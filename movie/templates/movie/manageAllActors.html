@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Manage Actors</title>
+</head>
+<body>
+
+  <h1> Manage Actors </h1>
+
+  {% if actorList %}
+    {% for actor in actorList %}
+      {% if forloop.first %}<div class="row">{% endif %}
+
+    	<!-- <div class="col-sm-2 "> -->
+      <ul>
+			   <li><a href="/movie/editActor/{{ actor.act_id }}/">
+      			<!-- <img src={{actor.act_picURL}} width="250px" height="350px"> <br> -->{{ actor.act_name }}</a>
+        </li>
+      </ul>
+    		<!-- </div> -->
+    <!-- {% if forloop.counter|divisibleby:6 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %} -->
+	{% endfor %}
+  {% else %}
+    <p>No Actors are available.</p>
+  {% endif %}
+
+</body>
+</html>

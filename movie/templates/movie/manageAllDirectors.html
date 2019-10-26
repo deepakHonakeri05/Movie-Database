@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Manage Directors</title>
+</head>
+<body>
+
+<h1>Manage Directors</h1>
+
+  {% if directorList %}
+    {% for director in directorList %}
+    {% if forloop.first %}<div class="row">{% endif %}
+
+    <!-- <div class="col-sm-2 "> -->
+    <ul>
+    	<li>
+        <a href="/movie/editDirector/{{ director.dir_id }}/">
+         <!--  <img src= {{director.dir_picURL}} width="240px" height="350px"> <br> --> {{ director.dir_name }}</a>
+     	</li>
+     </ul>
+    <!-- </div> -->
+    {% endfor %}
+{% else %}
+    <p>No Directors are available.</p>
+{% endif %}
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Add Director</title>
-	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 
 	<style type="text/css">
 
@@ -18,38 +18,50 @@
 
 <h1>Add Director Details</h1>
 
+{% if directorList %}
+{% for director in directorList %}
 <form>
   <div class="form-row">
-  <div class="col-sm-3 my-1">
+    <div class="col-sm-3 my-1">
       <label  for="inlineFormInputName">Name</label>
-      <input type="text" class="form-control" id="inlineFormInputName" placeholder="ex: Micheal Langer">
+      <input type="text" name="directorNameQuery" class="form-control" id="inlineFormInputName" placeholder="ex: Micheal Langer" value={{director.dir_name}}>
     </div>
 
     <div class="col-sm-3 my-1">
       <label for="inlineFormInputGroupUsername">ID</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">@</div>
-        </div>
-        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="ex: michealLanger-123">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">@</div>
+          </div>
+          <input type="text" name="dirIDQuery" class="form-control" id="inlineFormInputGroupUsername" placeholder="ex: michealLanger-123" value={{director.dir_id}}>
       </div>
     </div>
   </div>
 
- <div class="form-row">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputDirectorAddress">Bio</label>
+       <textarea class="form-control" name="directorBioQuery" id="inputDirectorAddress" rows="4">{{director.dir_bio}}</textarea>
+    </div>
+  </div>
+
+  <div class="form-row">
+
     <div class="form-group col-md-4">
-      <label for="inputDirectorAddress">Address</label>
-      <input type="text" class="form-control" id="inputDirectorAddress" placeholder="ex: Avengers Endgame">
+      <label for="inputRoles">Director Pic URL</label>
+       <input type="text" name="directorPicURLQuery" class="form-control" id="inputDirectorPhone" placeholder="ex: URL of image" value={{director.dir_picURL}}>
     </div>
 
     <div class="form-group col-md-2">
       <label for="inputRoles">Phone</label>
-       <input type="text" class="form-control" id="inputDirectorPhone" placeholder="ex: 9888232">
+       <input type="text" name="directorPhoneQuery" class="form-control" id="inputDirectorPhone" placeholder="ex: 9888232" value="{{director.dir_phone}}">
     </div>
-
-</div>
+  </div>
   <button type="submit" class="btn btn-primary">Save Director</button>
 </form>
+{% endfor %}
+{% endif %}
+
 
 </body>
 </html>

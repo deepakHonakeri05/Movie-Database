@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.template import loader
 from django.db import connection,transaction
 
-from .forms import movieSearchForm, actorSearchForm, directorSearchForm, signInForm, signUpForm, reviewForm
+from .forms import movieSearchForm, actorSearchForm, directorSearchForm, signInForm, signUpForm, reviewForm, editActor, editDirector, editMovie
 
 userIDGlobal = None
 signInLandingPage = 'movie/root.html'
@@ -33,7 +33,7 @@ def signIN(request):
 		userID = str(user_id)
 		passWord = str(password)
 
-		selectedUser = userinfo.objects.raw('''SELECT * FROM movie_userinfo where user_id = %s and password = %s''',[userID,passWord])
+		selectedUser = userinfo.objects.raw('''SELECT * FROM movie_userinfo WHERE user_id = %s and password = %s''',[userID,passWord])
 
 		if selectedUser :
 			#userSigned = "signed"
@@ -57,7 +57,7 @@ def signUP(request):
 
 
 	if user_id and password and email :
-		verifyUser = userinfo.objects.raw('''SELECT * FROM movie_userinfo where user_id = %s''',[user_id])
+		verifyUser = userinfo.objects.raw('''SELECT * FROM movie_userinfo WHERE user_id = %s''',[user_id])
 
 		if not verifyUser:
 			newUser = ''' INSERT into  movie_userinfo values (%s,%s,%s)'''
@@ -72,13 +72,6 @@ def signUP(request):
 		template = loader.get_template("movie/signup.html")
 		return HttpResponse(template.render())
 
-# def logout(request):
-# 	global userIDGlobal
-
-# 	userIDGlobal = None
-
-# 	template = loader.get_template("movie/root.html")
-# 	return HttpResponse(template.render())
 
 def allMovies(request):
 	
@@ -87,7 +80,7 @@ def allMovies(request):
 
 	if movieName:
 		movie = '%' + str(movieName) + '%'
-		movieResult = movies.objects.raw('''SELECT * FROM movie_movies where mov_title LIKE %s order by mov_year''',[movie])
+		movieResult = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_title LIKE %s order by mov_year''',[movie])
 
 	else :
 		movieResult = movies.objects.raw('''SELECT * FROM movie_movies order by mov_year ''')
@@ -100,7 +93,7 @@ def allDirectors(request):
 
 	if dirName:
 		directorName = '%' + str(dirName) + '%'
-		directorList = director.objects.raw('''SELECT * FROM movie_director where dir_name LIKE %s''',[directorName])
+		directorList = director.objects.raw('''SELECT * FROM movie_director WHERE dir_name LIKE %s''',[directorName])
 
 	else:
 		directorList = director.objects.raw('''SELECT * FROM movie_director''')
@@ -113,7 +106,7 @@ def allActors(request):
 
 	if actName :
 		actorName = '%' + str(actName) + '%'
-		actorList = actor.objects.raw('''SELECT * FROM movie_actor where act_name LIKE %s''',[actorName])
+		actorList = actor.objects.raw('''SELECT * FROM movie_actor WHERE act_name LIKE %s''',[actorName])
 
 	else:
 		actorList = actor.objects.raw('''SELECT * FROM movie_actor ''')
@@ -124,33 +117,33 @@ def movieDetails(request,mov_id):
 	global userIDGlobal
 	movID = int(mov_id)
 
-	Movie = movies.objects.raw('''SELECT * FROM movie_movies where mov_id = %s''',[movID])
-	directorInfo = director.objects.raw('''SELECT * FROM movie_director where dir_id in (SELECT dir_id from movie_movie_directedby where mov_id=%s)''',[movID])
+	Movie = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id = %s''',[movID])
+	directorInfo = director.objects.raw('''SELECT * FROM movie_director WHERE dir_id in (SELECT dir_id from movie_movie_directedby WHERE mov_id=%s)''',[movID])
 
-	reviews = rating.objects.raw('''SELECT * FROM movie_rating where mov_id=%s''',[movID])
+	reviews = rating.objects.raw('''SELECT * FROM movie_rating WHERE mov_id=%s''',[movID])
 	avgRating=0
 	for p in reviews:
-		avgRating += p.stars
+	    avgRating += p.stars
 
 	if avgRating != 0:
-		avgRating /= len(reviews)
-    
-	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'movie':Movie, 'reviews':reviews,'avgRating':avgRating})
+	    avgRating /= len(reviews)
+
+	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'movie':Movie, 'reviews':reviews ,'avgRating':avgRating })
 
 def directorDetails(request,dir_id):
 	Director = None
 	dirID = int(dir_id)
 
-	Director = director.objects.raw('''SELECT * FROM movie_director where  dir_id=%s''',[dirID])
-	moviesInfo = movies.objects.raw('''SELECT * FROM movie_movies where mov_id in (SELECT mov_id FROM movie_movie_directedby where dir_id = %s)''',[dirID])
+	Director = director.objects.raw('''SELECT * FROM movie_director WHERE  dir_id=%s''',[dirID])
+	moviesInfo = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id in (SELECT mov_id FROM movie_movie_directedby where dir_id = %s)''',[dirID])
 	return render(request, 'movie/director_details.html', {'Director':Director ,'moviesInfo':moviesInfo})  # 'moviesInfo':moviesInfo
 
 def actorDetails(request,act_id):
 	Actor = None
 	actID = int(act_id)
 
-	Actor = actor.objects.raw('''SELECT * FROM movie_actor where act_id =%s ''',[actID])
-	castInfo = movies.objects.raw('''SELECT * FROM movie_movies where mov_id in (SELECT mov_id FROM movie_moviecast where act_id = %s) ''',[actID])
+	Actor = actor.objects.raw('''SELECT * FROM movie_actor WHERE act_id =%s ''',[actID])
+	castInfo = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id in (SELECT mov_id FROM movie_moviecast where act_id = %s) ''',[actID])
 	return render(request, 'movie/actor_details.html', {'Actor':Actor, 'castInfo':castInfo})
 
 def movieRating(request,mov_id):
@@ -169,7 +162,7 @@ def movieRating(request,mov_id):
 		cursor = connection.cursor()
 
 		if checkReview :
-			cursor.execute('''DELETE FROM movie_rating where mov_id = %s and user_id=%s''',[mov_id,user_id])
+			cursor.execute('''DELETE FROM movie_rating WHERE mov_id = %s and user_id=%s''',[mov_id,user_id])
 			
 		newReview = ''' INSERT into  movie_rating (stars,reviews,mov_id,user_id) values (%s,%s,%s,%s) '''
 		cursor.execute(newReview,[reviewStarsQuery,reviewTextQuery,mov_id,user_id])
@@ -178,10 +171,56 @@ def movieRating(request,mov_id):
 		return  render(request, 'movie/rate_movie.html',{'reviewSaved':reviewSaved})
 
 	elif userIDGlobal or checkReview :
-		Movie = movies.objects.raw('''SELECT * FROM movie_movies where mov_id = %s''',[movID])
+		Movie = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id = %s''',[movID])
 		return render(request, 'movie/rate_movie.html',{'movie' : Movie , 'review':checkReview})		
 
 	else :
 		signInLandingPage = 'movie/rate_movie.html'
 		return signIN(request)
+
+def manageActors(request):
+	actorList = actor.objects.raw('''SELECT * FROM movie_actor ''')
+	return render(request,'movie/manageAllActors.html',{'actorList':actorList})
+
+def manageDirectors(request):
+	directorList = director.objects.raw('''SELECT * FROM movie_director''')
+	return render(request,'movie/manageAllDirectors.html',{'directorList': directorList})
+
+def manageMovies(request):
+	movieResult = movies.objects.raw('''SELECT * FROM movie_movies order by mov_year ''')
+	return render(request,'movie/manageAllMovies.html',{'movieResult':movieResult})
+
+def editActor(request,act_id):
+	act_id = int(act_id)
+
+	actorIDQuery = request.GET.get('actorIDQuery')
+	actorNameQuery = request.GET.get('actorNameQuery')
+	actorBiographyQuery = request.GET.get('actorBiographyQuery')
+	actorPicURLQuery = request.GET.get('actorPicURLQuery')
+	actorGenderQuery = 'f'
+
+	cursor = connection.cursor()
+
+	checkActor = actor.objects.raw('''SELECT * FROM movie_actor WHERE act_id=%s''',[act_id])
 	
+	if actorNameQuery and act_id and actorBiographyQuery and actorPicURLQuery :
+		if checkActor :
+			cursor.execute('''DELETE FROM movie_actor WHERE act_id=%s''',[act_id])
+
+		newActor = '''INSERT into movie_actor (act_id,act_name,act_gender,act_bio,act_picURL) values (%s,%s,%s,%s,%s)'''  
+		cursor.execute(newActor,[act_id,actorNameQuery,actorGenderQuery,actorBiographyQuery,actorPicURLQuery])
+		actorSaved = "actor saved"
+		return render(request,'movie/add_actor.html')
+
+	else :
+		return render(request,'movie/add_actor.html',{'actorList':checkActor})
+
+def editDirector(request,dir_id):
+	dir_id = int(dir_id)
+	directorList = director.objects.raw('''SELECT * FROM movie_director WHERE dir_id=%s ''',[dir_id])
+	return render(request,'movie/add_director.html',{'directorList': directorList})
+
+def editMovie(request,mov_id):
+	mov_id = int(mov_id)
+	movieResult = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id=%s''',[mov_id])
+	return render(request,'movie/add_movie.html',{'movieResult':movieResult})

@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 STATICFILES_DIRS = [
-"/Users/deepak/Documents/Movie-Database/movieDB/movie/static",
+ "/Users/deepak/Documents/Django/DBMS/movieDB/movie/static",
 ]
 # Application definition
 
@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'movieDB.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dbproject',
-        'USER': 'root',
-        'PASSWORD': 'root'
+        'NAME': 'movieProject',
+        'USER': 'deepak',
+        'PASSWORD': 'deepak'
     }
 }
 

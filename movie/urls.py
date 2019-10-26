@@ -14,6 +14,11 @@ urlpatterns = [
     path('directorDetails/<int:dir_id>/',views.directorDetails),
     path('actorDetails/<int:act_id>/',views.actorDetails),
     path('signin/',views.signIN),
-    path('signup/',views.signUP)
-    #path('',views.logout)
+    path('signup/',views.signUP),
+    path('manageDirectors',views.manageDirectors),
+    path('manageActors',views.manageActors),
+    path('manageMovies',views.manageMovies),
+    path('editActor/<int:act_id>/',views.editActor),
+    path('editDirector/<int:dir_id>/',views.editDirector),
+    path('editMovie/<int:mov_id>/',views.editMovie)
 ]
