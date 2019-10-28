@@ -28,6 +28,8 @@ class editActor(forms.Form):
 	actorGenderQuery = forms.CharField(label='actorGenderQuery')
 	actorBiographyQuery = forms.CharField(label='actorBiographyQuery',max_length=10000)
 	actorPicURLQuery = forms.CharField(label='actorPicURLQuery',max_length=500)
+	actorMovieRole = forms.CharField(label='actorMovieRole')
+	actorMoviePlayed = forms.CharField(label='actorMoviePlayed')
 
 class editDirector(forms.Form):
 	directorNameQuery = forms.CharField(label='directorNameQuery',max_length=50)

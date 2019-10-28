@@ -39,10 +39,14 @@
 
   <form>
 
+  {% if actorList %}
+   {% for actor in actorList %}
+
+
       <div class="form-row align-items-center">
         <div class="col-sm-3 my-1">
           <label  for="inlineFormInputName">Name</label>
-          <input type="text" class="form-control" id="inlineFormInputName" name="actorNameQuery" placeholder="ex: Jane Doe" >
+          <input type="text" class="form-control" id="inlineFormInputName" name="actorNameQuery" placeholder="ex: Jane Doe" value="{{actor.act_name}}">
         </div>
         <div class="col-sm-3 my-1">
           <label for="inlineFormInputGroupUsername">ID</label>
@@ -50,7 +54,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">@</div>
             </div>
-            <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="actorIDQuery" placeholder="ex: janedoe_123" >
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="actorIDQuery" placeholder="ex: janedoe_123" readonly="readonly" value="{{actor.act_id}}">
           </div>
         </div>
 
@@ -59,20 +63,20 @@
 
       <div class="form-group">
         <label for="inputAddress">Gender : </label><br>
-          <input type="text" name="actorGenderQuery" >
+          <input type="text" name="actorGenderQuery" value="{{actor.act_gender}}">
       </div>
 
      <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputBiography">Biography</label>
-        <textarea class="form-control" name="actorBiographyQuery" id="inputBiography" rows="4"></textarea>
+        <textarea class="form-control" name="actorBiographyQuery" id="inputBiography" rows="4">{{actor.act_bio}}</textarea>
       </div>
     </div>
 
  <div class="form-row">
   <div class="form-group col-md-6">
     <label for="inputAddress2">Actor pic URL</label>
-    <input type="text" class="form-control" name="actorPicURLQuery" id="inputAddress2" >
+    <input type="text" class="form-control" name="actorPicURLQuery" id="inputAddress2" value={{actor.act_picURL}}>
   </div>
 </div>
 
@@ -90,6 +94,8 @@
 </div>
 
 </div>
+ {% endfor %}
+ {% endif %}
 
   <button type="submit" class="btn btn-primary">Save Actor</button>
    </form>

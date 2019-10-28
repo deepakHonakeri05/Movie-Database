@@ -20,5 +20,6 @@ urlpatterns = [
     path('manageMovies',views.manageMovies),
     path('editActor/<int:act_id>/',views.editActor),
     path('editDirector/<int:dir_id>/',views.editDirector),
-    path('editMovie/<int:mov_id>/',views.editMovie)
+    path('editMovie/<int:mov_id>/',views.editMovie),
+    path('addActor/',views.addActor)
 ]
