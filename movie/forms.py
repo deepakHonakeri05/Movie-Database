@@ -25,6 +25,7 @@ class reviewForm(forms.Form):
 class editActor(forms.Form):
 	actorNameQuery = forms.CharField(label='actorNameQuery',max_length=50)
 	actorIDQuery = forms.CharField(label='actorIDQuery')
+	actorGenderQuery = forms.CharField(label='actorGenderQuery')
 	actorBiographyQuery = forms.CharField(label='actorBiographyQuery',max_length=10000)
 	actorPicURLQuery = forms.CharField(label='actorPicURLQuery',max_length=500)
 

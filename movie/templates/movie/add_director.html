@@ -13,6 +13,24 @@
 		}
 
 	</style>
+
+  <script type="text/javascript">
+
+  function newTextBox(element){
+   if(!element.value){
+       element.parentNode.removeChild( element.nextElementSibling);
+       return;
+   }
+   else if(element.nextElementSibling)
+       return;
+    var newTxt = element.cloneNode();
+    newTxt.id = 'txt_'+( parseInt( element.id.substring(element.id.indexOf('_')+1)) + 1);
+    newTxt.value='';
+    element.parentNode.appendChild(newTxt);
+  }  
+
+</script>
+
 </head>
 <body id="background_director">
 
@@ -41,7 +59,7 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputDirectorAddress">Bio</label>
-       <textarea class="form-control" name="directorBioQuery" id="inputDirectorAddress" rows="4">{{director.dir_bio}}</textarea>
+       <textarea class="form-control" name="directorBioQuery" id="inputDirectorAddress" rows="5">{{director.dir_bio}}</textarea>
     </div>
   </div>
 
@@ -57,6 +75,19 @@
        <input type="text" name="directorPhoneQuery" class="form-control" id="inputDirectorPhone" placeholder="ex: 9888232" value="{{director.dir_phone}}">
     </div>
   </div>
+
+  <div class="form-row">
+  <div class="form-group col-md-3">
+    <label>Movie Directed</label>
+    <br><input type="text" class="form-control" name="movieDirected[]" onkeydown="newTextBox(this)">
+
+  </div>
+
+  <div class="form-group col-md-3">
+    <label>Awards Won</label>
+    <br><input type="text" class="form-control" name="directorAwardWon[]" onkeydown="newTextBox(this)">
+  </div>
+</div>
   <button type="submit" class="btn btn-primary">Save Director</button>
 </form>
 {% endfor %}
