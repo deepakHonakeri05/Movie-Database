@@ -48,14 +48,14 @@ class movies(models.Model):
 class movie_directedby(models.Model):
 	class Meta:
 		unique_together = (("mov_id", "dir_id"))
-	mov_id = models.ForeignKey(movies,on_delete=models.CASCADE,db_column='mov_id') ##on delete = setnull
+	mov_id = models.ForeignKey(movies,on_delete=models.CASCADE,db_column='mov_id',primary_key=True) ##on delete = setnull
 	dir_id = models.ForeignKey(director,on_delete=models.CASCADE,db_column='dir_id')  ##on delete = setnull
 
 
 class moviecast(models.Model):
 	class Meta:
 		unique_together = (("act_id", "mov_id"),)
-	act_id = models.ForeignKey(actor,on_delete=models.CASCADE,db_column='act_id')
+	act_id = models.ForeignKey(actor,on_delete=models.CASCADE,db_column='act_id',primary_key=True)
 	mov_id = models.ForeignKey(movies,on_delete=models.CASCADE,db_column='mov_id')
 	role = models.CharField(max_length=30)
 

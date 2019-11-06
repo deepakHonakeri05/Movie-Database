@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 
   <style type="text/css">
+
   #background  {
   padding: 20px;
   background-color:#e8e8e8;
@@ -55,14 +56,16 @@
       </div>
 
       <div class="form-group col-md-6">
-        <label for="inputBiography">Review</label>
-        <textarea name="reviewTextQuery" class="form-control" id="inputBiography" required rows="4"></textarea>
+        <label>Review</label>
+        <textarea name="reviewTextQuery" class="form-control"  required rows="4"></textarea>
       </div>
 
    {% endif %}
 
   </div>
-  <button type="submit" class="btn btn-primary">Save Review</button>
+  <button type="submit" class="btn btn-success">Save </button>
+  <button type="submit" formaction="/movie/addActor/" class="btn btn-danger">Delete</button>
+  
   </form>
   {% if reviewSaved %}
     <div class="alert alert-success" role="alert"> Review Saved </div>

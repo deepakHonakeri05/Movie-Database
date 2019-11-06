@@ -77,7 +77,7 @@
       <img src={{actor.act_picURL}} width="250px" height="350px">
       <br>{{ actor.act_name }}</a>
     </div>
-    {% if forloop.counter|divisibleby:6 %}</div><div class="row">{% endif %}
+    {% if forloop.counter|divisibleby:5 %}</div><div class="row">{% endif %}
     {% if forloop.last %}</div>{% endif %}
 {% endfor %}
 {% else %}

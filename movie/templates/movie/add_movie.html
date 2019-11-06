@@ -16,15 +16,13 @@
 </head>
 <body id="background_movie">
  
-<h1>Edit Movie Details</h1>
+<h1>Add Movie Details</h1>
  <form >
-{% if movieResult %}
-{% for movie in movieResult %}
  
     <div class="form-row align-items-center">
       <div class="col-sm-3 my-1">
         <label  for="inlineFormInputName">Name</label>
-          <input type="text" name="movieNameQuery" class="form-control" id="inlineFormInputName" placeholder="ex: Transformers" value="{{movie.mov_title}}">
+          <input type="text" name="movieNameQuery" class="form-control" id="inlineFormInputName" placeholder="ex: Transformers" >
       </div>
       <div class="col-sm-3 my-1">
         <label for="inlineFormInputGroupUsername">Movie ID</label>
@@ -32,7 +30,7 @@
           <div class="input-group-prepend">
             <div class="input-group-text">@</div>
           </div>
-          <input type="text" name="movieIDQuery" class="form-control" id="inlineFormInputID" placeholder="ex: transformers_2012" readonly="readonly" value="{{movie.mov_id}}">
+          <input type="text" name="movieIDQuery" class="form-control" id="inlineFormInputID" placeholder="ex: transformers_2012">
         </div>
       </div>
 
@@ -54,22 +52,19 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputMovieDesc">Movie Description</label>
-        <textarea class="form-control" name="movieDescriptionQuery" id="inputMovieDesc" rows="5">{{movie.description}}</textarea>
+        <textarea class="form-control" name="movieDescriptionQuery" id="inputMovieDesc" rows="5"></textarea>
       </div>
     </div>
 
     <div class="form-row"> 
       <div class="form-group col-md-6"> 
         <label for="inputMovieURL">Movie Poster URL</label>
-          <input type="text" name="moviePosterURL" class="form-control" id="moviePosterURL" value="{{movie.movie_picurl}}">
+          <input type="text" name="moviePosterURL" class="form-control" id="moviePosterURL">
       </div>
     </div>
 
     </div>
       <button type="submit" class="btn btn-primary">Save Movie</button>
-
-    {% endfor %}
-   {% endif %}
   </form>
 
 </body>

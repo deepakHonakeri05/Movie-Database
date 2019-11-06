@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404,render
-from .models import actor, director, movies, moviecast, rating, userinfo
+from .models import actor, director, movies, moviecast, rating, userinfo, movie_directedby, movieactor_awards, moviedirector_awards
+from django.db.utils import OperationalError
+
 
 # Create your views here.
 from django.http import HttpResponse,HttpResponseRedirect
@@ -118,8 +120,9 @@ def movieDetails(request,mov_id):
 	movID = int(mov_id)
 
 	Movie = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id = %s''',[movID])
-	directorInfo = director.objects.raw('''SELECT * FROM movie_director WHERE dir_id in (SELECT dir_id from movie_movie_directedby WHERE mov_id=%s)''',[movID])
-	actorInfo = actor.objects.raw('''SELECT * FROM movie_actor WHERE act_id in (SELECT act_id from movie_moviecast WHERE mov_id=%s)''',[movID])
+	directorInfo = director.objects.raw('''SELECT * FROM movie_director WHERE dir_id in (SELECT dir_id FROM movie_movie_directedby WHERE mov_id=%s)''',[movID])
+	actorInfo = actor.objects.raw('''SELECT * FROM movie_actor WHERE act_id in (SELECT act_id FROM movie_moviecast WHERE mov_id=%s) order by act_id''',[movID])
+	actorCastList = moviecast.objects.raw('''SELECT * FROM movie_moviecast WHERE mov_id=%s  order by act_id''',[movID])
 
 	reviews = rating.objects.raw('''SELECT * FROM movie_rating WHERE mov_id=%s''',[movID])
 	avgRating=0
@@ -130,15 +133,17 @@ def movieDetails(request,mov_id):
 	    avgRating /= len(reviews)
 
 
-	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'actorInfo':actorInfo, 'movie':Movie, 'reviews':reviews ,'avgRating':avgRating })
+	return render(request, 'movie/movie_details.html', {'directorInfo':directorInfo, 'actorInfo':actorInfo,'actorCastList':actorCastList ,'movie':Movie, 'reviews':reviews ,'avgRating':avgRating })
 
 def directorDetails(request,dir_id):
 	Director = None
 	dirID = int(dir_id)
 
 	Director = director.objects.raw('''SELECT * FROM movie_director WHERE  dir_id=%s''',[dirID])
-	moviesInfo = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id in (SELECT mov_id FROM movie_movie_directedby where dir_id = %s)''',[dirID])
-	return render(request, 'movie/director_details.html', {'Director':Director ,'moviesInfo':moviesInfo})  # 'moviesInfo':moviesInfo
+	moviesInfo = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id in (SELECT mov_id FROM movie_movie_directedby where dir_id = %s ) order by mov_year''',[dirID])
+	directorAwardsList = moviedirector_awards.objects.raw('''SELECT * FROM movie_moviedirector_awards WHERE dir_id =%s''',[dirID])
+	
+	return render(request, 'movie/director_details.html', {'Director':Director ,'moviesInfo':moviesInfo ,'directorAwardsList':directorAwardsList})  # 'moviesInfo':moviesInfo
 
 def actorDetails(request,act_id):
 	Actor = None
@@ -146,7 +151,9 @@ def actorDetails(request,act_id):
 
 	Actor = actor.objects.raw('''SELECT * FROM movie_actor WHERE act_id =%s ''',[actID])
 	castInfo = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id in (SELECT mov_id FROM movie_moviecast where act_id = %s) ''',[actID])
-	return render(request, 'movie/actor_details.html', {'Actor':Actor, 'castInfo':castInfo})
+	actorAwardsList = movieactor_awards.objects.raw('''SELECT * FROM movie_movieactor_awards WHERE act_id=%s''',[act_id])
+
+	return render(request, 'movie/actor_details.html', {'Actor':Actor, 'castInfo':castInfo, 'actorAwardsList':actorAwardsList})
 
 def movieRating(request,mov_id):
 	global userIDGlobal
@@ -166,7 +173,7 @@ def movieRating(request,mov_id):
 		if checkReview :
 			cursor.execute('''DELETE FROM movie_rating WHERE mov_id = %s and user_id=%s''',[mov_id,user_id])
 			
-		newReview = ''' INSERT into  movie_rating (stars,reviews,mov_id,user_id) values (%s,%s,%s,%s) '''
+		newReview = ''' INSERT INTO  movie_rating (stars,reviews,mov_id,user_id) values (%s,%s,%s,%s) '''
 		cursor.execute(newReview,[reviewStarsQuery,reviewTextQuery,mov_id,user_id])
 		reviewSaved = "review saved"
 		signInLandingPage = 'movie/root.html'
@@ -181,11 +188,11 @@ def movieRating(request,mov_id):
 		return signIN(request)
 
 def manageActors(request):
-	actorList = actor.objects.raw('''SELECT * FROM movie_actor ''')
+	actorList = actor.objects.raw('''SELECT * FROM movie_actor order by act_id  ''')
 	return render(request,'movie/manageAllActors.html',{'actorList':actorList})
 
 def manageDirectors(request):
-	directorList = director.objects.raw('''SELECT * FROM movie_director''')
+	directorList = director.objects.raw('''SELECT * FROM movie_director order by dir_id''')
 	return render(request,'movie/manageAllDirectors.html',{'directorList': directorList})
 
 def manageMovies(request):
@@ -194,14 +201,8 @@ def manageMovies(request):
 
 def addActor(request):
 	actorIDQuery = request.GET.get('actorIDQuery')
-	actorMovieRole = request.GET.getlist('actorMovieRole')
-	actorMoviePlayed = request.GET.getlist('actorMoviePlayed')
-	for movieName in actorMoviePlayed :
-		for Movie in movies.objects.raw('''SELECT mov_id FROM movie_movies WHERE mov_title = %s''',[str(movieName)]) : 
-			index = actorMoviePlayed.index(movieName)
-			cursor.execute('''INSERT INTO movie_moviecast (role,act_id,mov_id) values (%s,%s,%s)''',[actorMovieRole[index],act_id,Movie.mov_id])
-	editActor(request,actorIDQuery)
-
+	if actorIDQuery :
+	 	editActor(request,actorIDQuery)
 	return render(request,'movie/add_actor.html') 
 
 def editActor(request,act_id):
@@ -214,29 +215,55 @@ def editActor(request,act_id):
 	actorGenderQuery = request.GET.get('actorGenderQuery')
 	actorMovieRole = request.GET.getlist('actorMovieRole')
 	actorMoviePlayed = request.GET.getlist('actorMoviePlayed')
+	actorAwardWon = request.GET.getlist('actorAwardWon')
 
 	cursor = connection.cursor()
 
 	checkActor = actor.objects.raw('''SELECT * FROM movie_actor WHERE act_id=%s''',[act_id])
+	actorCast = moviecast.objects.raw('''SELECT * FROM movie_moviecast WHERE act_id=%s''',[act_id])
+	actorAwardsList = movieactor_awards.objects.raw('''SELECT * FROM movie_movieactor_awards WHERE act_id=%s''',[act_id])
 	
 	if actorNameQuery and act_id and actorBiographyQuery and actorPicURLQuery :
 		if checkActor :
 			cursor.execute('''UPDATE  movie_actor SET act_name =%s ,act_gender=%s, act_bio=%s, act_picURL=%s WHERE act_id=%s''',[actorNameQuery,actorGenderQuery,actorBiographyQuery,actorPicURLQuery,act_id])
 			actorSaved = "actor saved"
-			for movieName in actorMoviePlayed :
-				for Movie in movies.objects.raw('''SELECT mov_id FROM movie_movies WHERE mov_title = %s''',[str(movieName)]) : 
-					index = actorMoviePlayed.index(movieName)
-					cursor.execute('''INSERT INTO movie_moviecast (role,act_id,mov_id) values (%s,%s,%s)''',[actorMovieRole[index],act_id,Movie.mov_id])
+
+			if actorMoviePlayed and actorMovieRole :
+				cursor.execute('''DELETE FROM movie_moviecast WHERE act_id=%s ''',[act_id])
+				for movieName in actorMoviePlayed :
+					for Movie in movies.objects.raw('''SELECT mov_id FROM movie_movies WHERE mov_title = %s''',[str(movieName)]) : 
+						index = actorMoviePlayed.index(movieName)
+						cursor.execute('''INSERT INTO movie_moviecast (role,act_id,mov_id) values (%s,%s,%s)''',[actorMovieRole[index],act_id,Movie.mov_id])
+
+			if actorAwardWon :
+				cursor.execute('''DELETE FROM movie_movieactor_awards WHERE act_id=%s''',[act_id])
+				for award in actorAwardWon :
+					if award :
+						cursor.execute('''INSERT INTO movie_movieactor_awards (act_id,awards) values (%s,%s)''',[act_id,str(award)])
+
 			return render(request,'movie/edit_actor.html')
 
 		else :
-			newActor = '''INSERT into movie_actor (act_id,act_name,act_gender,act_bio,act_picURL) values (%s,%s,%s,%s,%s)'''  
+			newActor = '''INSERT INTO movie_actor (act_id,act_name,act_gender,act_bio,act_picURL) values (%s,%s,%s,%s,%s)'''  
 			cursor.execute(newActor,[act_id,actorNameQuery,actorGenderQuery,actorBiographyQuery,actorPicURLQuery])
-			actorSaved = "actor saved"
+			for movieName in actorMoviePlayed :
+				for Movie in movies.objects.raw('''SELECT mov_id FROM movie_movies WHERE mov_title = %s''',[str(movieName)]) :
+					index = actorMoviePlayed.index(movieName)
+					cursor.execute('''INSERT INTO movie_moviecast (role,act_id,mov_id) values (%s,%s,%s)''',[actorMovieRole[index],act_id,Movie.mov_id])
+			for award in actorAwardWon :
+				if award :
+					cursor.execute('''INSERT INTO movie_movieactor_awards (act_id,awards) values (%s,%s)''',[act_id,str(award)])
+
 			return render(request,'movie/edit_actor.html')
 
 	else :
-		return render(request,'movie/edit_actor.html',{'actorList':checkActor})
+		return render(request,'movie/edit_actor.html',{'actorList':checkActor , 'actorCast':actorCast , 'actorAwardsList':actorAwardsList})
+
+def addDirector(request):
+	dirIDQuery = request.GET.get('dirIDQuery')
+	if dirIDQuery :
+		editDirector(request,dirIDQuery)
+	return render(request,'movie/add_director.html')
 
 def editDirector(request,dir_id):
 	dir_id = int(dir_id)
@@ -247,23 +274,61 @@ def editDirector(request,dir_id):
 	directorPicURLQuery = request.GET.get('directorPicURLQuery')
 	directorPhoneQuery = request.GET.get('directorPhoneQuery')
 
+	movieDirected = request.GET.getlist('movieDirected')
+	directorAwardWon = request.GET.getlist('directorAwardWon')
+
 	cursor = connection.cursor()
 
 	checkDirector = director.objects.raw('''SELECT * FROM movie_director WHERE dir_id=%s ''',[dir_id])
+	moviesDirectedList = movie_directedby.objects.raw('''SELECT * FROM movie_movie_directedby WHERE dir_id = %s ''',[dir_id])
+	directorAwardsList = moviedirector_awards.objects.raw('''SELECT * FROM movie_moviedirector_awards WHERE dir_id=%s''',[dir_id])
 	
 	if directorNameQuery and dirIDQuery and directorBioQuery and directorPicURLQuery and directorPhoneQuery :
 		if checkDirector :
-			cursor.execute('''UPDATE movie_director SET dir_name =%s ,  dir_phone =%s , dir_bio =%s  , dir_picURL = %s WHERE dir_id=%s ''',[directorNameQuery,directorPhoneQuery,directorBioQuery,directorPicURLQuery,dir_id])
-			directorSaved = "directorSaved"	
-			return render(request,'movie/edit_director.html')
+			cursor.execute('''UPDATE movie_director SET dir_name =%s,  dir_phone =%s, dir_bio =%s, dir_picURL = %s WHERE dir_id=%s ''',[directorNameQuery,directorPhoneQuery,directorBioQuery,directorPicURLQuery,dir_id])
+
+			# if movieDirected :
+			#  	cursor.execute('''DELETE FROM movie_movie_directedby WHERE dir_id=%s''',[dir_id])
+			#  	for movDirected in movieDirected :
+			#  		for Movie in movies.objects.raw('''SELECT mov_id FROM movie_movies WHERE mov_title = %s''',[str(movDirected)]) :
+			#  			cursor.execute('''INSERT INTO movie_movie_directedby (dir_id,mov_id) values (%s,%s)''',[dir_id,Movie.mov_id])
+
+			# if directorAwardWon :
+			# 	cursor.execute('''DELETE FROM movie_moviedirector_awards  WHERE dir_id=%s''',[dir_id])
+			# 	for award in directorAwardWon :
+			# 		if award :
+			# 			cursor.execute('''INSERT INTO movie_moviedirector_awards (dir_id,awards) values (%s,%s)''',[dir_id,str(award)])
+			# 			directorAwardSaved = "directorAwardSaved"
+			# return render(request,'movie/edit_director.html')
 
 		else :
 			newDirector = '''INSERT INTO movie_director (dir_id,dir_name,dir_phone,dir_bio,dir_picURL) values(%s,%s,%s,%s,%s)'''
 			cursor.execute(newDirector,[dirIDQuery,directorNameQuery,directorPhoneQuery,directorBioQuery,directorPicURLQuery])
-			directorSaved = "directorSaved"
-			return render(request,'movie/edit_director.html')
+
+		try :	
+			if movieDirected :
+				cursor.execute('''DELETE FROM movie_movie_directedby WHERE dir_id=%s''',[dir_id])
+				for movDirected in movieDirected :
+					for Movie in movies.objects.raw('''SELECT mov_id FROM movie_movies WHERE mov_title = %s''',[str(movDirected)]) :
+						cursor.execute('''INSERT INTO movie_movie_directedby (dir_id,mov_id) values (%s,%s)''',[dir_id,Movie.mov_id])
+		except OperationalError as e:
+			return HttpResponse("Trigger Invoked!!!!!!!!!! \n You can't add 3 or more directors ")
+			
+		if directorAwardWon :
+			cursor.execute('''DELETE FROM movie_moviedirector_awards  WHERE dir_id=%s''',[dir_id])
+			for award in directorAwardWon :
+				if award :
+					cursor.execute('''INSERT INTO movie_moviedirector_awards (dir_id,awards) values (%s,%s)''',[dir_id,str(award)])
+		directorAwardSaved = "directorAwardSaved"
+		return render(request,'movie/edit_director.html')
 	else :
-		return render(request,'movie/edit_director.html',{'directorList': checkDirector})
+		return render(request,'movie/edit_director.html',{'directorList': checkDirector,'moviesDirectedList':moviesDirectedList,'directorAwardsList':directorAwardsList })
+
+def addMovie(request):
+	movieIDQuery = request.GET.get('movieIDQuery')
+	if movieIDQuery :
+		editMovie(request,movieIDQuery)
+	return render(request,'movie/add_movie.html') 
 
 def editMovie(request,mov_id):
 	mov_id = int(mov_id)
@@ -278,13 +343,13 @@ def editMovie(request,mov_id):
 
 	checkMovie = movies.objects.raw('''SELECT * FROM movie_movies WHERE mov_id=%s''',[mov_id])
 
-	if movieNameQuery and movieDescriptionQuery and moviePosterURL and movieYearQuery and movieLangQuery and actorMovieRole :
+	if movieNameQuery and movieDescriptionQuery and moviePosterURL and movieYearQuery and movieLangQuery :
 		if checkMovie :
 			cursor.execute('''UPDATE movie_movies SET mov_title =%s ,mov_year =%s , mov_lang=%s, description=%s, movie_picurl=%s where mov_id =%s ''',[movieNameQuery,movieYearQuery,movieLangQuery,movieDescriptionQuery,moviePosterURL,mov_id])
-			return render(request,'movie/add_movie.html')
+			return render(request,'movie/edit_movie.html')
 		else :
 			newMovie = '''INSERT INTO movie_movies(mov_id,mov_title,mov_year,mov_lang,description,movie_picurl) values (%s,%s,%s,%s,%s,%s)'''
-			cursor.execute()
+			cursor.execute(newMovie,[mov_id,movieNameQuery,movieYearQuery,movieLangQuery,movieDescriptionQuery,moviePosterURL])
 			return render(request,'movie/edit_movie.html')
 	else:
 		return render(request,'movie/edit_movie.html',{'movieResult':checkMovie})

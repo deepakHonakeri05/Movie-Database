@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Movie Results</title>
+	<title>Director Results</title>
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 
 	<style type="text/css">
@@ -25,13 +25,6 @@
   }
 
 	</style>
-
-	<script type="text/javascript" href="rating.js">
-		// Rating Initialization
-		$(document).ready(function() {
-		  $('#rateMe3').mdbRate();
-		});
-	</script>
 
 </head>
 <body>
@@ -69,9 +62,9 @@
           Manage database
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Movies</a>
-          <a class="dropdown-item" href="#">Actors</a>
-          <a class="dropdown-item" href="#">Directors</a>
+          <a class="dropdown-item" href="/movie/manageActors">Actors</a>
+          <a class="dropdown-item" href="/movie/manageMovies">Movies</a>
+          <a class="dropdown-item" href="/movie/manageDirectors">Directors</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="http://127.0.0.1:8000/admin/">Admin page</a>
         </div>
@@ -122,12 +115,13 @@
     <div class="directorOscars">
       <h3>Awards Won</h3>
       <ul>
-        <li>C - ......</li>
-        <li>D - ......</li>
-        <li>E - ......</li>
-<!--        {% for question in latest_question_list %}
-            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-        {% endfor %} -->
+        {% if directorAwardsList %}
+         {% for award in directorAwardsList %}
+          <li> {{award.awards}} </li>
+          {% endfor %}
+        {% else %}
+            <p>No Awards won.</p>
+      {% endif %}
       </ul>
     </div> 
 

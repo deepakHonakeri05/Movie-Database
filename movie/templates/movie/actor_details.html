@@ -111,7 +111,7 @@
         <h3>Biography</h3>
         {% if Actor %}
          {% for actor in Actor %}
-        <p>{{actor.act_bio}}</p>
+            <p>{{actor.act_bio}}</p>
          {% endfor %}
       {% endif %}
 
@@ -120,12 +120,13 @@
     <div class="directorOscars">
       <h3>Awards Won</h3>
       <ul>
-        <li>C - ......</li>
-        <li>D - ......</li>
-        <li>E - ......</li>
-<!--        {% for question in latest_question_list %}
-            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-        {% endfor %} -->
+      {% if actorAwardsList %}
+         {% for awardWon in actorAwardsList %}
+          <li> {{awardWon.awards}} </li>
+          {% endfor %}
+      {% else %}
+          <p>No awards won.</p>
+      {% endif %}
       </ul>
     </div>
 

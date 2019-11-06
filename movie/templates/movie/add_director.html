@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Edit Director</title>
+	<title>Add Director</title>
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 
 	<style type="text/css">
@@ -34,14 +34,13 @@
 </head>
 <body id="background_director">
 
-<h1>Edit Director Details</h1>
+<h1>Add Director Details</h1>
 
-{% for director in directorList %}
 <form>
   <div class="form-row">
     <div class="col-sm-3 my-1">
       <label  for="inlineFormInputName">Name</label>
-      <input type="text" name="directorNameQuery" class="form-control" id="inlineFormInputName" placeholder="ex: Micheal Langer" value={{director.dir_name}}>
+      <input type="text" name="directorNameQuery" class="form-control" id="inlineFormInputName" placeholder="ex: Micheal Langer" >
     </div>
 
     <div class="col-sm-3 my-1">
@@ -50,7 +49,7 @@
           <div class="input-group-prepend">
             <div class="input-group-text">@</div>
           </div>
-          <input type="text" name="dirIDQuery" class="form-control" id="inlineFormInputGroupUsername" placeholder="ex: michealLanger-123" readonly="readonly" value={{director.dir_id}}>
+          <input type="text" name="dirIDQuery" class="form-control" id="inlineFormInputGroupUsername" placeholder="ex: michealLanger-123">
       </div>
     </div>
   </div>
@@ -66,42 +65,29 @@
 
     <div class="form-group col-md-4">
       <label for="inputRoles">Director Pic URL</label>
-       <input type="text" name="directorPicURLQuery" class="form-control" id="inputDirectorPhone" placeholder="ex: URL of image" value={{director.dir_picURL}}>
+       <input type="text" name="directorPicURLQuery" class="form-control" id="inputDirectorPhone" placeholder="ex: URL of image" >
     </div>
 
     <div class="form-group col-md-2">
       <label for="inputRoles">Phone</label>
-       <input type="text" name="directorPhoneQuery" class="form-control" id="inputDirectorPhone" placeholder="ex: 9888232" value="{{director.dir_phone}}">
+       <input type="text" name="directorPhoneQuery" class="form-control" id="inputDirectorPhone" placeholder="ex: 9888232" >
     </div>
   </div>
 
   <div class="form-row">
-    <div class="form-group col-md-3">
-      <label>Movie Directed</label> <br>
-        {% if moviesDirectedList %}
-          {% for movie in moviesDirectedList %}
-              <input type="text" class="form-control" name="movieDirected" value="{{ movie.mov_id }}" onkeydown="newTextBox(this)">
-          {% endfor %}
-        {% else %}
-              <input type="text" class="form-control" name="movieDirected"  onkeydown="newTextBox(this)">
-        {% endif %}
+  <div class="form-group col-md-3">
+    <label>Movie Directed</label>
+    <br><input type="text" class="form-control" name="movieDirected" onkeydown="newTextBox(this)">
+
   </div>
 
   <div class="form-group col-md-3">
-    <label>Awards Won</label><br>
-    {% if directorAwardsList %}
-      {% for award in directorAwardsList %}
-       <input type="text" class="form-control" name="directorAwardWon" value="{{ award.awards }}" onkeydown="newTextBox(this)">
-       {% endfor %}
-    {% else %}
-      <input type="text" class="form-control" name="directorAwardWon" onkeydown="newTextBox(this)">
-    {% endif %}
+    <label>Awards Won</label>
+    <br><input type="text" class="form-control" name="directorAwardWon" onkeydown="newTextBox(this)">
   </div>
 </div>
   <button type="submit" class="btn btn-primary">Save Director</button>
 </form>
-{% endfor %}
-
 
 </body>
 </html>

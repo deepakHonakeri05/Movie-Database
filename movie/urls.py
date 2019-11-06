@@ -21,5 +21,8 @@ urlpatterns = [
     path('editActor/<int:act_id>/',views.editActor),
     path('editDirector/<int:dir_id>/',views.editDirector),
     path('editMovie/<int:mov_id>/',views.editMovie),
-    path('addActor/',views.addActor)
+    path('addActor/',views.addActor),
+    path('addMovie/',views.addMovie),
+    path('addDirector/',views.addDirector),
+    # path('deleteReview/<int:>')
 ]

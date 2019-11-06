@@ -44,6 +44,7 @@
           <label  for="inlineFormInputName">Name</label>
           <input type="text" class="form-control" id="inlineFormInputName" name="actorNameQuery" placeholder="ex: Jane Doe" >
         </div>
+
         <div class="col-sm-3 my-1">
           <label for="inlineFormInputGroupUsername">ID</label>
           <div class="input-group">
@@ -53,7 +54,6 @@
             <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="actorIDQuery" placeholder="ex: janedoe_123" >
           </div>
         </div>
-
       </div>
  
 
@@ -89,10 +89,17 @@
   </div>
 </div>
 
+<div class="form-row">
+  <div class="col-sm-3 my-1">
+    <label  for="inlineFormInputName">Awards Won</label>
+    <input type="text" class="form-control" id="inlineFormInputName" name="actorAwardWon" onkeydown="newTextBox(this)">
+  </div>
+</div>
+
 </div>
 
   <button type="submit" class="btn btn-primary">Save Actor</button>
-   </form>
+ </form>
 </form>
 </body>
 </html>

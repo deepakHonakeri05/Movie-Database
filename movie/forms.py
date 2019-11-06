@@ -30,13 +30,16 @@ class editActor(forms.Form):
 	actorPicURLQuery = forms.CharField(label='actorPicURLQuery',max_length=500)
 	actorMovieRole = forms.CharField(label='actorMovieRole')
 	actorMoviePlayed = forms.CharField(label='actorMoviePlayed')
+	actorAwardWon = forms.CharField(label='actorAwardWon')
 
 class editDirector(forms.Form):
 	directorNameQuery = forms.CharField(label='directorNameQuery',max_length=50)
 	dirIDQuery = forms.CharField(label='dirIDQuery')
-	directorBioQuery = forms.CharField(label='directorBioQuery',max_length=500)
+	directorBioQuery = forms.CharField(label='directorBioQuery',max_length=10000)
 	directorPicURLQuery = forms.CharField(label='directorPicURLQuery',max_length=500)
 	directorPhoneQuery = forms.CharField(label='directorPhoneQuery')
+	movieDirected = forms.CharField(label='movieDirected')
+	directorAwardWon = forms.CharField(label='directorAwardWon')
 
 class editMovie(forms.Form):
 	movieNameQuery = forms.CharField(label='movieNameQuery',max_length=50)

@@ -2,14 +2,25 @@
 <html>
 <head>
 	<title>Manage Directors</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 </head>
+
+<style type="text/css">
+  #addNewBtn{
+    position: absolute;
+    top: 10px;
+    right: 22px;
+    font-size: 18px;
+  }
+</style>
+
 <body>
 
 <h1>Manage Directors</h1>
 
   {% if directorList %}
     {% for director in directorList %}
-    {% if forloop.first %}<div class="row">{% endif %}
+    <!-- {% if forloop.first %}<div class="row">{% endif %} -->
 
     <!-- <div class="col-sm-2 "> -->
     <ul>
@@ -23,6 +34,9 @@
 {% else %}
     <p>No Directors are available.</p>
 {% endif %}
+<form>
+    <button id="addNewBtn" type="submit" formaction="/movie/addDirector/" class="btn btn-success"> Add new </button>
+</form>
 
 </body>
 </html>
