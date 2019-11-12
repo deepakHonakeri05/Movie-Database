@@ -38,8 +38,10 @@
 
       <div class="form-group col-md-6">
         <label for="inputBiography">Review</label>
-        <textarea name="reviewTextQuery" class="form-control" id="inputBiography"  required rows="4"> {{rev.reviews}}</textarea>
+        <textarea name="reviewTextQuery" class="form-control" id="inputBiography" rows="4"> {{rev.reviews}}</textarea>
       </div>
+      <button type="submit" class="btn btn-success">Save </button>
+      <button type="submit" formaction="/movie/deleteReview/{{ rev.mov_id }}/" class="btn btn-danger">Delete</button>
       {% endfor %}
 
       {% else %}
@@ -57,19 +59,18 @@
 
       <div class="form-group col-md-6">
         <label>Review</label>
-        <textarea name="reviewTextQuery" class="form-control"  required rows="4"></textarea>
+        <textarea name="reviewTextQuery" class="form-control" rows="4"></textarea>
       </div>
 
-   {% endif %}
-
   </div>
+
   <button type="submit" class="btn btn-success">Save </button>
-  <button type="submit" formaction="/movie/addActor/" class="btn btn-danger">Delete</button>
-  
+  <button type="submit" formaction="/movie/deleteReview/{{ rev.mov_id }}/" class="btn btn-danger">Delete</button>
+  {% endif %} 
   </form>
-  {% if reviewSaved %}
+  <!-- {% if reviewStatus %}
     <div class="alert alert-success" role="alert"> Review Saved </div>
-  {% endif %}	
+  {% endif %}	 -->
 
 </form>
 </body>
