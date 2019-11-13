@@ -117,7 +117,7 @@
       <ul>
         {% if moviesInfo %}
          {% for directorMov in moviesInfo %}
-            <li> {{ directorMov.mov_title }} - {{directorMov.mov_year}} </li>
+            <li> <a href="/movie/movieDetails/{{ directorMov.mov_id }}"/> {{ directorMov.mov_title }} - {{directorMov.mov_year}} </li>
           {% endfor %}
           {% else %}
             <p>No movies Directed.</p>

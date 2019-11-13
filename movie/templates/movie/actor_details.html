@@ -122,7 +122,7 @@
       <ul>
         {% if castInfo %}
          {% for castInfo in castInfo %}
-            <li> {{ castInfo.mov_title }} - {{castInfo.mov_year}} </li>
+            <li> <a href="/movie/movieDetails/{{ castInfo.mov_id }}"/> {{ castInfo.mov_title }} - {{castInfo.mov_year}} </li>
          {% endfor %}
          {% else %}
             <p>No movies acted.</p>
