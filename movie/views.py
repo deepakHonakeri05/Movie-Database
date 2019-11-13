@@ -351,3 +351,9 @@ def editMovie(request,mov_id):
 		return redirect('/movie/manageMovies/')
 	else:
 		return render(request,'movie/edit_movie.html',{'movieResult':checkMovie})
+
+def adminLogin(request) :
+	return render(request,'movie/adminPage.html')
+
+def manageDB(request) :
+	return render(request,'movie/manageDB.html')

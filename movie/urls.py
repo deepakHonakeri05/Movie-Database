@@ -24,5 +24,7 @@ urlpatterns = [
     path('addActor/',views.addActor),
     path('addMovie/',views.addMovie),
     path('addDirector/',views.addDirector),
-    path('deleteReview/<str:mov_title>/',views.deleteReview)
+    path('deleteReview/<str:mov_title>/',views.deleteReview),
+    path('adminLogin/',views.adminLogin),
+    path('manageDB/',views.manageDB)
 ]
