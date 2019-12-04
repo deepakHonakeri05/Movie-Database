@@ -48,3 +48,7 @@ class editMovie(forms.Form):
 	moviePosterURL = forms.CharField(label='moviePosterURL',max_length=100)
 	movieYearQuery = forms.CharField(label='movieYearQuery')
 	movieLangQuery = forms.CharField(label='movieLangQuery',max_length=30)
+
+class editUser(forms.Form):
+	userEmailQuery = forms.CharField(label='userEmailQuery',max_length=50)
+	userIDQuery = forms.CharField(label='userIDQuery')

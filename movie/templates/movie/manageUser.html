@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Manage Directors</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+	<title>Manage Users</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 </head>
 
 <style type="text/css">
@@ -29,7 +29,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto"> 
+    <ul class="navbar-nav mr-auto">
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,27 +50,23 @@
     </ul>
     </div>
   </nav>
-<h1>Manage Directors</h1>
+  <h1> Manage Users </h1>
 
-  {% if directorList %}
-    {% for director in directorList %}
-    <!-- {% if forloop.first %}<div class="row">{% endif %} -->
+  {% if userList %}
+    {% for user in userList %}
 
-    <!-- <div class="col-sm-2 "> -->
-    <ul>
-    	<li>
-        <a href="/movie/editDirector/{{ director.dir_id }}/">
-         <!--  <img src= {{director.dir_picURL}} width="240px" height="350px"> <br> --> {{ director.dir_name }}</a>
-     	</li>
-     </ul>
-    <!-- </div> -->
-    {% endfor %}
-{% else %}
-    <p>No Directors are available.</p>
-{% endif %}
-<form>
-    <button id="addNewBtn" type="submit" formaction="/movie/addDirector/" class="btn btn-success"> Add new </button>
-</form>
-
+    	<!-- <div class="col-sm-2 "> -->
+      <ul>
+			   <li><a href="/movie/editUser/{{ user.user_id }}/">
+      			<!-- <img src={{actor.act_picURL}} width="250px" height="350px"> <br> -->{{ user.email }}</a>
+        </li>
+      </ul>
+    		<!-- </div> -->
+    <!-- {% if forloop.counter|divisibleby:6 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %} -->
+	{% endfor %}
+  {% else %}
+    <p>No Users are available.</p>
+  {% endif %}
 </body>
 </html>

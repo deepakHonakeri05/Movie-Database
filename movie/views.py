@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.template import loader
 from django.db import connection,transaction
 
-from .forms import movieSearchForm, actorSearchForm, directorSearchForm, signInForm, signUpForm, reviewForm, editActor, editDirector, editMovie
+from .forms import movieSearchForm, actorSearchForm, directorSearchForm, signInForm, signUpForm, reviewForm, editActor, editDirector, editMovie, editUser
 
 userIDGlobal = None
 signInLandingPage = 'movie/root.html'
@@ -212,6 +212,10 @@ def manageMovies(request):
 	movieResult = movies.objects.raw('''SELECT * FROM movie_movies order by mov_year ''')
 	return render(request,'movie/manageAllMovies.html',{'movieResult':movieResult})
 
+def manageUsers(request):
+	userList = userinfo.objects.raw('''SELECT * FROM movie_userinfo order by user_id ''')
+	return render(request,'movie/manageUser.html',{'userList':userList})
+
 def addActor(request):
 	actorIDQuery = request.GET.get('actorIDQuery')
 	if actorIDQuery :
@@ -351,6 +355,52 @@ def editMovie(request,mov_id):
 		return redirect('/movie/manageMovies/')
 	else:
 		return render(request,'movie/edit_movie.html',{'movieResult':checkMovie})
+
+
+def editUser(request,user_id):
+	user_id = int(user_id)
+	userEmailQuery = request.GET.get('userEmailQuery')
+	userIDQuery = request.GET.get('userIDQuery')
+	
+	UserList = userinfo.objects.raw('''SELECT * FROM movie_userinfo WHERE user_id=%s ''',[user_id])
+
+	if userIDQuery and userIDQuery :
+		cursor = connection.cursor()
+		cursor.execute('''DELETE FROM movie_userinfo WHERE user_id = %s''',[user_id])
+		return redirect('/movie/manageUsers/')
+
+	return render(request,'movie/editUser.html',{'UserList':UserList})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def adminLogin(request) :
 	return render(request,'movie/adminPage.html')

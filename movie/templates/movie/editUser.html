@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit a Actor</title>
+</head>
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+
+  <style type="text/css">
+  #background  {
+  padding: 30px;
+  background-color:#e8e8e8;
+  background-origin: content-box;
+  }
+  </style>
+
+<!--   <script type="text/javascript">
+
+  function newTextBox(element){
+   if(!element.value){
+       element.parentNode.removeChild( element.nextElementSibling);
+       return;
+   }
+   else if(element.nextElementSibling)
+       return;
+    var newTxt = element.cloneNode();
+    newTxt.id = 'txt_'+( parseInt( element.id.substring(element.id.indexOf('_')+1)) + 1);
+    newTxt.value='';
+    element.parentNode.appendChild(newTxt);
+  }  
+
+</script> -->
+
+<body id="background">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<form>
+
+  <h1>User Details</h1>
+
+  <form>
+
+  {% if UserList %}
+   {% for user in UserList %}
+
+      <div class="form-row align-items-center">
+        <div class="col-sm-3 my-1">
+          <label  for="inlineFormInputName">Email</label>
+          <input type="text" class="form-control" id="inlineFormInputName" name="userEmailQuery" readonly="readonly" value="{{user.email}}">
+        </div>
+
+        <div class="col-sm-3 my-1">
+          <label for="inlineFormInputGroupUsername">User ID</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">@</div>
+            </div>
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="userIDQuery" placeholder="ex: 1230" readonly="readonly" value="{{user.user_id}}">
+          </div>
+        </div>
+      </div>
+
+
+
+  <button type="submit" class="btn btn-danger">Delete User</button>
+
+ {% endfor %}
+ {% endif %}
+  </form>
+</form>
+</body>
+</html>

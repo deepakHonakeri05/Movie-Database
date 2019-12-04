@@ -114,7 +114,7 @@
   		{% if directorInfo %}
       <ul>
         {% for director in directorInfo %}
-          <li>{{ director.dir_name }}  {{ director.dir_phone }} </li>
+          <li> <a href="/movie/directorDetails/{{director.dir_id }}/"> {{ director.dir_name }} </a>  {{ director.dir_phone }} </li>
       {% endfor %}
       </ul>
       {% else %}
