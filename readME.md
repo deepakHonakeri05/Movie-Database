@@ -11,7 +11,7 @@
 Screenshots
 
 
-<img src=".screenshots/s5.png" width="800" height="550">
+<img src="./screenshots/s5.png" width="800" height="550">
 <img src="./screenshots/s11.png" width="800" height="550">
 <img src="./screenshots/s9.png" width="800" height="550">
 <img src="./screenshots/s3.png" width="800" height="550">
